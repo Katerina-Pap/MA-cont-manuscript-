@@ -13,41 +13,37 @@
 \title{\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}: An interactive tool for the meta-analysis of continuous outcomes using R \texttt{Shiny}}
 
 \author[1,2]{Katerina Papadimitropoulou*}
-
-\author[3]{Richard Riley}
-
-\author[1]{Olaf Dekkers}
-
+\author[3]{Richard D. Riley}
+\author[1]{Olaf M. Dekkers}
 \author[4]{Theo Stijnen}
-
 \author[1,4]{Saskia le Cessie}
 
-\authormark{AUTHOR ONE \textsc{et al}}
+\authormark{Katerina Papadimitropoulou \textsc{et al}}
 
-\address[1]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
+\address[1]{\orgdiv{Clinical Epidemiology}, \orgname{Leiden University Medical Center}, \country{The Netherlands}}
 
-\address[2]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
+\address[2]{\orgdiv{Data Science \& Biometrics}, \orgname{Danone Nutricia Research - Utrecht}, \country{The Netherlands}}
 
-\address[3]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
+\address[3]{\orgdiv{Centre for Prognosis Research, Research Institute for Primary Care \& Health Sciences}, \orgname{Keele University},  \country{England}}
 
-\address[4]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
+\address[4]{\orgdiv{Biomedical Data Sciences}, \orgname{Leiden University Medical Center}, \country{The Netherlands}}
 
-\corres{*Corresponding author name, This is sample corresponding address. \email{authorone@gmail.com}}
+\corres{*Katerina Papadimitropoulou, Clinical Epidemiology, Leiden University Medical Center. \email{a.papadimitropoulou@lumc.nl}}
 
-\presentaddress{This is sample for present address text this is sample for present address text}
+% \presentaddress{This is sample for present address text this is sample for present address text}
 
-\abstract[Summary]{Meta-analysis is a widely used methodology to combine evidence from different sources examining a common research phenomenon, to obtain a quantitative summary of the studied phenomenon. In the medical field, multiple studies investigate the effectiveness of new treatments and meta-analysis is largely performed to generate the summary (average) treatment effect. In the meta-analysis of aggregate continuous outcomes measured in a pre/post design, a plethora of methods exist: analysis of final (follow-up) scores, analysis of change scores and analysis of covariance (ANCOVA). Specialised and general purpose statistical software is used to apply the various methods, yet, often the choice among them depends on data availability and statistical affinity. We present a new web-based tool, 
+\abstract[Abstract]{Meta-analysis is a widely used methodology to combine evidence from different sources examining a common research phenomenon, to obtain a quantitative summary of the studied phenomenon. In the medical field, multiple studies investigate the effectiveness of new treatments and meta-analysis is largely performed to generate the summary (average) treatment effect. In the meta-analysis of aggregate continuous outcomes measured in a pre/post design, a plethora of methods exist: analysis of final (follow-up) scores, analysis of change scores and analysis of covariance (ANCOVA). Specialised and general purpose statistical software is used to apply the various methods, yet, often the choice among them depends on data availability and statistical affinity. We present a new web-based tool, 
 \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}, to conduct meta-analysis of continuous data assessed pre- and post-treatment using the aforementioned approaches on aggregate data and a more flexible approach of generating and analysing pseudo individual participant data (IPD). The interactive web environment, available by R \texttt{Shiny}, is used to create this freely available statistical tool, requiring no programming skills by the users.}
 
-\keywords{keyword1, keyword2, keyword3, keyword4}
+\keywords{ ANCOVA, baseline imbalance, pseudo individual participant data, shiny}
 
 \jnlcitation{\cname{%
-\author{Williams K.}, 
-\author{B. Hoskins}, 
-\author{R. Lee}, 
-\author{G. Masato}, and 
-\author{T. Woollings}} (\cyear{2016}), 
-\ctitle{A regime analysis of Atlantic winter jet variability applied to evaluate HadGEM3-GC2}, \cjournal{Q.J.R. Meteorol. Soc.}, \cvol{2017;00:1--6}.}
+\author{Papadimitropoulou K.}, 
+\author{R.D. Riley}, 
+\author{o.M. Dekkers}, 
+\author{T. Stijnen}, and 
+\author{S. le Cessie}} (\cyear{2021}), 
+\ctitle{\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}: An interactive tool for the meta-analysis of continuous outcomes using R \texttt{Shiny}}, \cjournal{Research Synthesis Methods}.}
 
 \maketitle
 
@@ -79,7 +75,7 @@ The app can be accessed via the following url: \url{https://katerina-pap.shinyap
 The tool is designed to make routinely used and more sophisticated meta-analytic approaches available to the user, requiring no programming skills, yet a good understanding of meta-analytic concepts. The app offers a worked out example, where a default data set is used to showcase the various functionalities. The users can upload their own data sets into the webpage and proceed with data manipulation and analysis steps. All generated tabular and graphical output may be downloaded and accessed later by the user.  A step-by-step demonstration of \textbf{\texttt{MA-cont:pre/post effect size}} is provided in a video of instructions found in the homepage of the tool (Figure \ref{shiny-homepage}).
 
 \begin{figure}[t]
-   \centering \includegraphics[width=1.1\textwidth]{homepage.JPG}
+   \centering \includegraphics[width=0.9\textwidth]{homepage.JPG}
     \caption{\small {Homepage.}}\label{shiny-homepage}
 \end{figure}
 
@@ -122,7 +118,7 @@ The \textquotesingle Load data\textquotesingle\ navigation tab allows the import
 %The users may give different labels to their variables, for example, \textquotesingle Mean0\textquotesingle\ for \textquotesingle MeanBaseline\textquotesingle\ as long as these values comprise the third column of the input data set.
 
 \begin{figure}[t]
-  \centering \includegraphics[width=1.1\textwidth]{input_data.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{input_data.JPG}
     \caption{\small {Screenshot of the data entry step for the default data set in long format and output of data table.}} \label{fig: shiny-input_data}
 \end{figure}
 
@@ -145,19 +141,19 @@ r = \frac{sd^2_{B}+sd^2_{F} - sd^2_{Changescores}}{2sd_{B}sd_{F}},
 where suffixes $B, F$ stand for baseline and follow-up, respectively.
 
 \begin{figure}[t]
-   \centering \includegraphics[width=1.0\textwidth]{fill_empty.JPG}
+   \centering \includegraphics[width=0.9\textwidth]{fill_empty.JPG}
     \caption{\small {Screenshot of the \textquotesingle Fill-in\textquotesingle\ tab that enables stepwise calculation/imputation of missing summary data.}} \label{fig:shiny_missing}
 \end{figure}
 
 The sequence of filling-in steps is shown in Figure \ref{fig: shiny-fillin_output}. The last \textit{action button} performs any final calculations necessary to create a complete data set, which is then used for the analysis. This final data set can be viewed under the \textquotesingle View final data\textquotesingle\ tab as shown in Figure \ref{fig: shiny-final_data}.
 
 \begin{figure}[t]
-  \centering \includegraphics[width=1.0\textwidth]{fill_some.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{fill_some.JPG}
     \caption{\small {Screenshot of the output of the \textquotesingle Fill-in\textquotesingle\ tab, where each \textit{action button} performs a calculation/imputation task.}} \label{fig: shiny-fillin_output}
 \end{figure}
 
 \begin{figure}[h]
-  \centering \includegraphics[width=1.0\textwidth]{final_data.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{final_data.JPG}
     \caption{\small {Screenshot of the output of the \textquotesingle View final data\textquotesingle\ tab, where a complete data set is created.}} \label{fig: shiny-final_data}
 \end{figure}
 
@@ -173,7 +169,7 @@ The default choice of effect size is set to \textquotesingle Mean difference\tex
 The tool is organised as such to offer three key analytic approaches under the respective tabs: \textquotesingle Standard AD\textquotesingle\ ,  \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ . The first tab of standard AD approaches is split to 3 sub-tabs, which perform the routinely used final (follow-up) scores and change scores methods and the reconstructed ANCOVA estimates method. The first interaction step of the user with the app is to choose between a RE or a CE meta-analysis model (default option is the RE). It is also possible to implement the recommended HK \citep{HartungJ.Knapp2001, sidik2002simple} adjustment method by ticking the box. The same selection options apply also to the \textquotesingle Two-stage pseudo IPD\textquotesingle\ approach tab.
 
 \begin{figure}[ht]
-  \centering \includegraphics[width=1.0\textwidth]{analysis_options.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{analysis_options.JPG}
     \caption{\small {Screenshot of the available meta-analysis models.}} \label{fig:shiny-choose_analysis}
 \end{figure}
 
@@ -200,7 +196,7 @@ The results of the summary treatment effect under this approach are given in the
 
 
 \begin{figure}[t]
-  \centering \includegraphics[width=1.0\textwidth]{one_stage.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{one_stage.JPG}
     \caption{\small {Screenshot of one-stage pseudo IPD approach, the pseudo IPD set and the results across the various options for the within-study residual variances.}} \label{fig:shiny-one-stage}
 \end{figure}
 
@@ -210,7 +206,7 @@ The results of the summary treatment effect under this approach are given in the
 The within-trial treatment-by-baseline interaction effect can be obtained under the homonym sub-tabs of the \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ tabs. In the first approach, the results are presented in a table, with four distinct options of the within-study residual variance (Figure \ref{fig:shiny-one-int} ). If we focus on the study-specific assumption for the residual variances, then the interaction effect is estimated equal to 0.006 [95\% CI: -0.033, 0.045], indicating a non-significant relationship at participant level between the baseline score and the treatment effect.
 
 \begin{figure} [t] 
-  \centering \includegraphics[width=0.8\textwidth]{onestage_int.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{onestage_int.JPG}
     \caption{\small {Screenshot of the results for the treatment-by-baseline interaction effect under the one-stage pseudo IPD approach.}} \label{fig:shiny-one-int}
 \end{figure}
 
@@ -221,7 +217,7 @@ Very similar results may be found under the \textquotesingle Two-stage pseudo IP
 \textbf{Step 5: Visualise results via forest plots and funnel plots}
 \vspace{0.1cm}
 
-For the standard AD and the two-stage pseudo IPD approach, we provide the a forest plot, to graphically present the study findings and the summary effect and a funnel plot, to visually inspect publication bias. Both visualisations for the ANCOVA Recovered effect estimates are shown in Figure \ref{fig:shiny-forest_funnel}. Any choices by the user to switch to a CE model or to incorporate the HK approach under the RE model are automatically rendered to the forest and funnel plots. Both plots can be saved in a portable document format (PDF) by clicking at the respective \textit{action buttons}.
+For the standard AD and the two-stage pseudo IPD approaches, we provide the a forest plot, to graphically present the study findings and the summary effect and a funnel plot, to visually inspect publication bias. Both visualisations for the ANCOVA Recovered effect estimates are shown in Figure \ref{fig:shiny-forest_funnel}. Any choices by the user to switch to a CE model or to incorporate the HK approach under the RE model are automatically rendered to the forest and funnel plots. Both plots can be saved in a portable document format (PDF) by clicking at the respective \textit{action buttons}.
 
 \begin{figure} [t]
   \centering \includegraphics[width=0.9\textwidth]{forest_funnel.JPG}
