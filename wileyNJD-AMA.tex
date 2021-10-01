@@ -51,8 +51,7 @@
 
 \maketitle
 
-\footnotetext{\textbf{Abbreviations:} ANA, anti-nuclear antibodies; APC, antigen-presenting cells; IRF, interferon regulatory factor}
-
+\footnotetext{\textbf{Abbreviations:} IPD, individual participant data; ANCOVA, analysis of covariance;}
 
 \section{Introduction}\label{sec1}
 
@@ -79,11 +78,12 @@ The app can be accessed via the following url: \url{https://katerina-pap.shinyap
 
 The tool is designed to make routinely used and more sophisticated meta-analytic approaches available to the user, requiring no programming skills, yet a good understanding of meta-analytic concepts. The app offers a worked out example, where a default data set is used to showcase the various functionalities. The users can upload their own data sets into the webpage and proceed with data manipulation and analysis steps. All generated tabular and graphical output may be downloaded and accessed later by the user.  A step-by-step demonstration of \textbf{\texttt{MA-cont:pre/post effect size}} is provided in a video of instructions found in the homepage of the tool (Figure \ref{shiny-homepage}).
 
-\begin{figure}[H]
+\begin{figure}[t]
    \centering \includegraphics[width=1.1\textwidth]{homepage.JPG}
     \caption{\small {Homepage.}}\label{shiny-homepage}
 \end{figure}
 
+\newpage
 \subsection{Development}
 
 We used computing technologies and R packages, i.e., RStudio \citep{Rstudiocite}, \texttt{Shiny} \citep{chang2017shiny} and the extensively used packages for fitting
@@ -121,7 +121,7 @@ The \textquotesingle Load data\textquotesingle\ navigation tab allows the import
 %Three options for the comma and decimal separators are available to choose from as many regions across the world use a comma "," for their numbers, which in conjunction with .csv files. 
 %The users may give different labels to their variables, for example, \textquotesingle Mean0\textquotesingle\ for \textquotesingle MeanBaseline\textquotesingle\ as long as these values comprise the third column of the input data set.
 
-\begin{figure}[ht]
+\begin{figure}[t]
   \centering \includegraphics[width=1.1\textwidth]{input_data.JPG}
     \caption{\small {Screenshot of the data entry step for the default data set in long format and output of data table.}} \label{fig: shiny-input_data}
 \end{figure}
@@ -144,20 +144,20 @@ r = \frac{sd^2_{B}+sd^2_{F} - sd^2_{Changescores}}{2sd_{B}sd_{F}},
 \end{equation*}
 where suffixes $B, F$ stand for baseline and follow-up, respectively.
 
-\begin{figure}[ht]
-   \centering \includegraphics[width=1.1\textwidth]{fill_empty.JPG}
+\begin{figure}[t]
+   \centering \includegraphics[width=1.0\textwidth]{fill_empty.JPG}
     \caption{\small {Screenshot of the \textquotesingle Fill-in\textquotesingle\ tab that enables stepwise calculation/imputation of missing summary data.}} \label{fig:shiny_missing}
 \end{figure}
 
 The sequence of filling-in steps is shown in Figure \ref{fig: shiny-fillin_output}. The last \textit{action button} performs any final calculations necessary to create a complete data set, which is then used for the analysis. This final data set can be viewed under the \textquotesingle View final data\textquotesingle\ tab as shown in Figure \ref{fig: shiny-final_data}.
 
-\begin{figure}[ht]
-  \centering \includegraphics[width=1.1\textwidth]{fill_some.JPG}
+\begin{figure}[t]
+  \centering \includegraphics[width=1.0\textwidth]{fill_some.JPG}
     \caption{\small {Screenshot of the output of the \textquotesingle Fill-in\textquotesingle\ tab, where each \textit{action button} performs a calculation/imputation task.}} \label{fig: shiny-fillin_output}
 \end{figure}
 
 \begin{figure}[h]
-  \centering \includegraphics[width=1.1\textwidth]{final_data.JPG}
+  \centering \includegraphics[width=1.0\textwidth]{final_data.JPG}
     \caption{\small {Screenshot of the output of the \textquotesingle View final data\textquotesingle\ tab, where a complete data set is created.}} \label{fig: shiny-final_data}
 \end{figure}
 
@@ -172,15 +172,15 @@ The default choice of effect size is set to \textquotesingle Mean difference\tex
 
 The tool is organised as such to offer three key analytic approaches under the respective tabs: \textquotesingle Standard AD\textquotesingle\ ,  \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ . The first tab of standard AD approaches is split to 3 sub-tabs, which perform the routinely used final (follow-up) scores and change scores methods and the reconstructed ANCOVA estimates method. The first interaction step of the user with the app is to choose between a RE or a CE meta-analysis model (default option is the RE). It is also possible to implement the recommended HK \citep{HartungJ.Knapp2001, sidik2002simple} adjustment method by ticking the box. The same selection options apply also to the \textquotesingle Two-stage pseudo IPD\textquotesingle\ approach tab.
 
-\begin{figure}[H]
-  \centering \includegraphics[width=1.1\textwidth]{analysis_options.JPG}
+\begin{figure}[ht]
+  \centering \includegraphics[width=1.0\textwidth]{analysis_options.JPG}
     \caption{\small {Screenshot of the available meta-analysis models.}} \label{fig:shiny-choose_analysis}
 \end{figure}
 
 \vspace{0.1cm}
 
 \textbf{Step 4: Obtain results}
-
+\vspace{0.1cm}
 
 For the one- and two-stage pseudo IPD approaches the output is split in two sub-tabs to distinguish between the summary treatment effect and the treatment-by-baseline interaction effect results, respectively. For the AD analyses, we provide the results of three analytic methods to estimate the summary treatment effect.
 
@@ -189,8 +189,8 @@ For the one- and two-stage pseudo IPD approaches the output is split in two sub-
 \end{itemize}
 The generated output under the \textquotesingle Standard AD\textquotesingle\ tab is identical for the three approaches and consists of a verbose print out and standard visualisations of the meta-analysis results. For example, if we click on the \textquotesingle ANCOVA Recovered effect estimates\textquotesingle\ (which is more appropriate than final or change scores analyses), the results are provided in the verbose summary of the \texttt{rma} function of \texttt{metafor}. The summary treatment effect is estimated equal to -0.48 kg [95\% CI: -1.23, 0.27] (Figure \ref{fig:shiny-ancova_res}). Additional relevant output can be found, for example the estimate of between-study heterogeneity $\tau^2$, in this case estimated equal to 0.63 and the $I^2$ and $H^2$ statistics. Identical output and very similar results can be found under sub-tab \textquotesingle Treatment effect\textquotesingle\ of the \textquotesingle Two-stage pseudo IPD\textquotesingle\ tab.
 
-\begin{figure}[ht]
-  \centering \includegraphics[width=1.1\textwidth]{ANCOVA_res.JPG}
+\begin{figure}[t]
+  \centering \includegraphics[width=1.0\textwidth]{ANCOVA_res.JPG}
     \caption{\small {Screenshot of results based on the ANCOVA recovered estimates approach.}} \label{fig:shiny-ancova_res}
 \end{figure}
 
@@ -199,8 +199,8 @@ Under the \textquotesingle One-stage pseudo IPD\textquotesingle\ tab, we initial
 The results of the summary treatment effect under this approach are given in the second table (in grey) of this tab (Figure \ref{fig:shiny-one-stage}). We provide four possible options to model the within-study residual variances to allow the user to assume more realistic scenarios depending on the data specificities. We encourage the user to think which assumption suits his/her data best or present all four, if possible. When interested in a summary estimate that naturally compares with the two-stage approach or the AD ANCOVA recovered estimates, one should choose to present the results from the study-specific within-study residual variance model. In this example, the summary treatment effect was estimated equal to -0.43 kg [95\% CI: -1.16, -0.3].
 
 
-\begin{figure}[ht]
-  \centering \includegraphics[width=1.1\textwidth]{one_stage.JPG}
+\begin{figure}[t]
+  \centering \includegraphics[width=1.0\textwidth]{one_stage.JPG}
     \caption{\small {Screenshot of one-stage pseudo IPD approach, the pseudo IPD set and the results across the various options for the within-study residual variances.}} \label{fig:shiny-one-stage}
 \end{figure}
 
@@ -209,28 +209,29 @@ The results of the summary treatment effect under this approach are given in the
 \end{itemize}
 The within-trial treatment-by-baseline interaction effect can be obtained under the homonym sub-tabs of the \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ tabs. In the first approach, the results are presented in a table, with four distinct options of the within-study residual variance (Figure \ref{fig:shiny-one-int} ). If we focus on the study-specific assumption for the residual variances, then the interaction effect is estimated equal to 0.006 [95\% CI: -0.033, 0.045], indicating a non-significant relationship at participant level between the baseline score and the treatment effect.
 
-\begin{figure} [ht] 
-  \centering \includegraphics[width=1.1\textwidth]{onestage_int.JPG}
+\begin{figure} [t] 
+  \centering \includegraphics[width=0.8\textwidth]{onestage_int.JPG}
     \caption{\small {Screenshot of the results for the treatment-by-baseline interaction effect under the one-stage pseudo IPD approach.}} \label{fig:shiny-one-int}
 \end{figure}
 
 Very similar results may be found under the \textquotesingle Two-stage pseudo IPD\textquotesingle\ tab. Under this analysis, it is possible to switch to a common(fixed) interaction effect and to include the HK correction for constructing a 95\% confidence interval for the summary interaction effect.
 
-%\newpage
+\newpage
 \vspace{0.1cm}
 \textbf{Step 5: Visualise results via forest plots and funnel plots}
-
+\vspace{0.1cm}
 
 For the standard AD and the two-stage pseudo IPD approach, we provide the a forest plot, to graphically present the study findings and the summary effect and a funnel plot, to visually inspect publication bias. Both visualisations for the ANCOVA Recovered effect estimates are shown in Figure \ref{fig:shiny-forest_funnel}. Any choices by the user to switch to a CE model or to incorporate the HK approach under the RE model are automatically rendered to the forest and funnel plots. Both plots can be saved in a portable document format (PDF) by clicking at the respective \textit{action buttons}.
 
-\begin{figure} [H]
-  \centering \includegraphics[width=1.1\textwidth]{forest_funnel.JPG}
+\begin{figure} [t]
+  \centering \includegraphics[width=0.9\textwidth]{forest_funnel.JPG}
     \caption{\small {Screenshot of the forest plot and funnel plot for the treatment effect RE analysis under the ANCOVA Recovered estimates method.}} \label{fig:shiny-forest_funnel}
 \end{figure}
 
 \vspace{0.1cm}
 
 \textbf{Step 6: Save and extract output}
+\vspace{0.1cm}
 
 All plots produced by the app can be downloaded as a portable document format (PDF) or as a portable network graphic (PNG). In addition, the analyses under the \textquotesingle Standard AD\textquotesingle\ tab can be saved by clicking on the \textquotesingle PRINT\textquotesingle\ \textit{action button} at the bottom of the page. This opens a dialogue window where the page (prior being sent to the printer) can be saved in a PDF format. We additionally provide three options to interact with the output of the tables under the \textquotesingle One-stage pseudo IPD\textquotesingle\ tab. It is possible to copy the table (and pasting it to a Word document), save it as PDF or send it to the printer, by clicking at the respective buttons. 
 
