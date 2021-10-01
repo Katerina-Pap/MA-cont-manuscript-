@@ -10,16 +10,19 @@
 
 \begin{document}
 
-\title{This is the sample article title\protect\thanks{This is an example for title footnote.}}
+\title{\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}: An interactive tool for the meta-analysis of continuous outcomes using R \texttt{Shiny}}
 
-\author[1]{Author One*}
+\author[1,2]{Katerina Papadimitropoulou*}
 
-\author[2,3]{Author Two}
+\author[3]{Richard Riley}
 
-\author[3]{Author Three}
+\author[1]{Olaf Dekkers}
+
+\author[4]{Theo Stijnen}
+
+\author[1,4]{Saskia le Cessie}
 
 \authormark{AUTHOR ONE \textsc{et al}}
-
 
 \address[1]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
 
@@ -27,13 +30,14 @@
 
 \address[3]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
 
+\address[4]{\orgdiv{Org Division}, \orgname{Org Name}, \orgaddress{\state{State name}, \country{Country name}}}
+
 \corres{*Corresponding author name, This is sample corresponding address. \email{authorone@gmail.com}}
 
 \presentaddress{This is sample for present address text this is sample for present address text}
 
-\abstract[Summary]{This is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract tex
-
-t this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text this is sample abstract text.}
+\abstract[Summary]{Meta-analysis is a widely used methodology to combine evidence from different sources examining a common research phenomenon, to obtain a quantitative summary of the studied phenomenon. In the medical field, multiple studies investigate the effectiveness of new treatments and meta-analysis is largely performed to generate the summary (average) treatment effect. In the meta-analysis of aggregate continuous outcomes measured in a pre/post design, a plethora of methods exist: analysis of final (follow-up) scores, analysis of change scores and analysis of covariance (ANCOVA). Specialised and general purpose statistical software is used to apply the various methods, yet, often the choice among them depends on data availability and statistical affinity. We present a new web-based tool, 
+\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}, to conduct meta-analysis of continuous data assessed pre- and post-treatment using the aforementioned approaches on aggregate data and a more flexible approach of generating and analysing pseudo individual participant data (IPD). The interactive web environment, available by R \texttt{Shiny}, is used to create this freely available statistical tool, requiring no programming skills by the users.}
 
 \keywords{keyword1, keyword2, keyword3, keyword4}
 
@@ -50,802 +54,204 @@ t this is sample abstract text this is sample abstract text this is sample abstr
 \footnotetext{\textbf{Abbreviations:} ANA, anti-nuclear antibodies; APC, antigen-presenting cells; IRF, interferon regulatory factor}
 
 
-\section{Sample for first level head}\label{sec1}
+\section{Introduction}\label{sec1}
 
-xLorem ipsum dolor sit amet, consectetuer adipiscing elit.\cite{Hirt1974} Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae,
-felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec
-vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus
-sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel
-leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur
-auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-Duis eget orci sit amet orci dignissim rutrum.
+Meta-analysis is a widely adopted methodology to synthesize findings from multiple studies investigating the same research topic, to provide a numerical summary of the studied topic and a measure of its uncertainty \citep{hedges1985statistical, Borenstein2009,  CooperHarris;HedgesLarryandValentine2009}. In the medical setting, various research groups plan and conduct individual studies, often examining treatment effectiveness of new interventions (most commonly compared to a control/no treatment). There is, thus, vast amount of clinical evidence for healthcare practitioners and policy makers to keep pace with and often the evidence may additionally be contradictory \citep{bastian2010seventy}. The need to accumulate the ever-increasing medical evidence has led to the development of the meta-analysis framework and its numerous methodological advances over the years \citep{gurevitch2018meta}.
 
-\begin{eqnarray}
-s(nT_{s}) &= &s(t)\times \sum\limits_{n=0}^{N-1} \delta (t-nT_{s}) \xleftrightarrow{\mathrm{DFT}}  S \left(\frac{m}{NT_{s}}\right) \nonumber\\
-&= &\frac{1}{N} \sum\limits_{n=0}^{N-1} \sum\limits_{k=-N/2}^{N/2-1} s_{k} e^{\mathrm{j}2\pi k\Delta fnT_{s}} e^{-j\frac{2\pi}{N}mn}
-\end{eqnarray}
+The widespread adoption of meta-analysis by many research fields has increased the need for robust statistical tools for analysis.  In the meta-analysis of continuous outcome data (measured on the same scale), a plethora of analytic methods exist, which can be implemented in specialised and generic statistical software. Often choosing an analytic method boils down to the researcher's statistical and programming skills on a software of choice, and data availability.
+% Often non-technical users may choose a less appropriate approach, for example analysing follow-up scores, instead of baseline-adjusted scores via ANCOVA, due to lack of programming/software-specific skills. 
 
-\section{Sample for another first level head}\label{sec2}
+In this work, we present a web-based interactive tool — \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}} — we developed for meta-analysing continuous outcomes to enable researchers perform appropriate analyses and present their results in a straightforward and meaningful fashion. The tool is open-source, easily accessible from any internet browser (\url{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}), thanks to R \citep{RCoreTeam2020}, RStudio \citep{Rstudiocite} and \texttt{Shiny} (an R package for building interactive web apps) \citep{chang2017shiny}. The remainder of the paper is organised as follows: we briefly address the need for this tool and why it is important to have a user-friendly software that allows for various modelling approaches to be implemented. Then, we introduce the tool, its objectives and functionalities based on R packages for data analysis and \texttt{Shiny}. We additionally provide an illustration of the tool, using a worked example and a step-by-step navigation through the functionalities of the application (app). We conclude with a discussion on future work.
 
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus viverra
-fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa ac
-quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo.\cite{Liska2010} Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
+\section{Why is there a need for this tool?}
 
-Example for bibliography citations cite\cite{Taylor1937}, cites\cite{Knupp1999,Kamm2000}
+The meta-analysis of continuous outcomes measured at baseline and follow-up can be performed by pooling the mean differences based on a) follow-up scores, b) change scores, calculated by subtracting the follow-up from the baseline score and c) an ANCOVA model, which adjusts for the baseline scores. Currently, the bulk of meta-analysis of such continuous outcomes synthesize mean difference estimates obtained by the former two approaches, because ANCOVA estimates are rarely reported \citep{austin2010substantial}. However, when baseline imbalance occurs the conclusion of the meta-analysis may shift depending on the analytic method \citep{fu2016change}.
 
-Quisque ullamcorper placerat ipsum. Cras nibh.\cite{Kucharik2003,Blanchard2015} Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. In hac habitasse platea dictumst. Integer tempus convallis augue. Etiam facilisis.
-Nunc elementum fermentum wisi. Aenean placerat. Ut imperdiet, enim sed gravida sollicitudin, felis odio placerat
-quam, ac pulvinar elit purus eget enim. Nunc vitae tortor. Proin tempus nibh sit amet nisl. Vivamus quis tortor
-vitae risus porta vehicula.
+As long as the trials included in the meta-analysis are \textit{adequately} randomised, all three methods, based on follow-up scores, change scores and ANCOVA will give similar unbiased estimates of the mean difference, yet the ANCOVA estimator is preferred for being more efficient \citep{senn2006change, fu2013handling, senn2013seven, senn2014baseline}. However, even in randomised studies chance baseline imbalance will always occur, which can be taken into account only by the ANCOVA, both follow-up and change scores methods fall short as the former entirely ignores the baseline and the latter cannot adjust for it \citep{vickers2001analysing}. Thus, in the absence of reported ANCOVA estimates, the meta-analyst is left between a choice of two estimates, which cannot handle any (chance) baseline imbalance. Depending on the strength of the within-group correlation between baseline and follow-up scores, the mean difference estimates based on follow-up and change scores will be closer/farther from the ANCOVA estimate.
 
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, et
-vehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
+We have recently discussed options to recover ANCOVA estimates by available summary statistics under certain assumptions (Papadimitropoulou under review, \cite{senn2006change, mckenzie2016impact}). In addition, we have proposed a novel approach, based on \textit{sufficient statistics}, to perform ANCOVA meta-analysis by generating and analysing pseudo IPD \citep{papadimitropoulou2020meta}. This pseudo IPD approach provides identical results to the original IPD, as long as the pseudo IPD set matches the appropriate summary data for an ANCOVA.
 
+While ANCOVA approaches have been recommended \citep{fu2013handling, daly2021nice}, we believe that the lack of statistical expertise or software skills may be a barrier for non-technical experts to catch-up with these ANCOVA methods. A big motivation for \textbf{\texttt{MA-cont:pre/post effect size}} was thus, to enable a large audience of technical and non-technical specialists to use the appropriate methods for their meta-analysis. A larger aspiration and the reason why we provide the results of follow-up scores, change scores approaches and various modelling options under the pseudo IPD approach, is to engage the user in a thinking journey to explore the different methods (and results) based on assumptions on their data.
 
-\begin{figure}[t]
-\centerline{\includegraphics[width=342pt,height=9pc,draft]{empty}}
-\caption{This is the sample figure caption.\label{fig1}}
+\section{The \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}} TOOL}
+
+The app can be accessed via the following url: \url{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}. All code is available in a github repository: \url{https://github.com/Katerina-Pap/MA-cont-shiny-app}.
+
+The tool is designed to make routinely used and more sophisticated meta-analytic approaches available to the user, requiring no programming skills, yet a good understanding of meta-analytic concepts. The app offers a worked out example, where a default data set is used to showcase the various functionalities. The users can upload their own data sets into the webpage and proceed with data manipulation and analysis steps. All generated tabular and graphical output may be downloaded and accessed later by the user.  A step-by-step demonstration of \textbf{\texttt{MA-cont:pre/post effect size}} is provided in a video of instructions found in the homepage of the tool (Figure \ref{shiny-homepage}).
+
+\begin{figure}[H]
+   \centering \includegraphics[width=1.1\textwidth]{homepage.JPG}
+    \caption{\small {Homepage.}}\label{shiny-homepage}
 \end{figure}
 
-Suspendisse vel felis. Ut lorem lorem, interdum eu, tincidunt sit amet, laoreet vitae, arcu. Aenean faucibus pede eu
-ante. Praesent enim elit, rutrum at, molestie non, nonummy vel, nisl. Ut lectus eros, malesuada sit amet, fermentum
-eu, sodales cursus, magna. Donec eu purus. Quisque vehicula, urna sed ultricies auctor, pede lorem egestas dui, et
-convallis elit erat sed nulla. Donec luctus. Curabitur et nunc. Aliquam dolor odio, commodo pretium, ultricies non,
-pharetra in, velit. Integer arcu est, nonummy in, fermentum faucibus, egestas vel, odio.
+\subsection{Development}
 
-Sed commodo posuere pede. Mauris ut est. Ut quis purus. Sed ac odio. Sed vehicula hendrerit sem. Duis non
-odio. Morbi ut dui. Sed accumsan risus eget odio. In hac habitasse platea dictumst. Pellentesque non elit. Fusce
-sed justo eu urna porta tincidunt. Mauris felis odio, sollicitudin sed, volutpat a, ornare ac, erat. Morbi quis dolor.
-Donec pellentesque, erat ac sagittis semper, nunc dui lobortis purus, quis congue purus metus ultricies tellus. Proin
-et quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Praesent sapien
-turpis, fermentum vel, eleifend faucibus, vehicula eu, lacus.
+We used computing technologies and R packages, i.e., RStudio \citep{Rstudiocite}, \texttt{Shiny} \citep{chang2017shiny} and the extensively used packages for fitting
+\begin{enumerate}
+    \item meta-analytic models — \texttt{metafor} \citep{viechtbauer2010conducting},
+    \item (non-linear) mixed models — \texttt{nlme} \citep{pinheiro2017package}.
+\end{enumerate}
+A \texttt{Shiny} app executes R code on the backend; in this app most analyses are powered by \texttt{metafor} and \texttt{nlme}, without any requirements of local installation of R/RStudio. What the user sees in the browser is the frontend, the interface for the user to interact with the app via a personal computer, tablet or phone.
 
-\begin{figure*}
-\centerline{\includegraphics[width=342pt,height=9pc,draft]{empty}}
-\caption{This is the sample figure caption.\label{fig2}}
-\end{figure*}
+We encourage the reader/user to submit feedback on the existing functionalities and to provide suggestions for further improvement  \url{https://github.com/Katerina-Pap/MA-cont-shiny-app/issues}.
 
-\subsection{Example for second level head}
+\subsection{Statistical analysis}
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec odio elit, dictum
-in, hendrerit sit amet, egestas sed, leo. Praesent feugiat sapien aliquet odio. Integer vitae justo. Aliquam vestibulum
-fringilla lorem. Sed neque lectus, consectetuer at, consectetuer sed, eleifend ac, lectus. Nulla facilisi. Pellentesque
-eget lectus. Proin eu metus. Sed porttitor. In hac habitasse platea dictumst. Suspendisse eu lectus. Ut mi mi, lacinia
-sit amet, placerat et, mollis vitae, dui. Sed ante tellus, tristique ut, iaculis eu, malesuada ac, dui. Mauris nibh leo,
-facilisis non, adipiscing quis, ultrices a, dui.
+The tool offers five approaches to estimate the summary mean difference: the standard aggregate data (AD) methods of pooling follow-up scores and change scores estimates, the ANCOVA recovered effect estimates and one-stage and two-stage pseudo IPD ANCOVA. More details on the analytic expressions of the standard AD approaches and the ANCOVA recovered estimates approach can be found in \cite{riley2013meta, mckenzie2016impact}, Papadimitropoulou (under review).
 
-Morbi luctus, wisi viverra faucibus pretium, nibh est placerat odio, nec commodo wisi enim eget quam. Quisque
-libero justo, consectetuer a, feugiat vitae, porttitor eu, libero. Suspendisse sed mauris vitae elit sollicitudin malesuada.
+For each of the AD analytic methods, a choice between a random-effects (RE) or a common (fixed)-effect (CE) model \citep{hedges1985statistical, Borenstein2009} is provided to the user (default option is the RE). When RE models are fitted in the AD, or in the second step of the two-stage pseudo IPD approach, the between-study heterogeneity parameter $\tau^2$, is estimated using restricted maximum likelihood approach (REML) \citep{raudenbush2009analyzing}. Simulation studies suggest that this estimator has recommendable properties over other iterative and non-iterative estimators \citep{viechtbauer2005bias, veroniki2016methods}. In addition, under the RE model it is possible to obtain the refined standard error estimate of the summary treatment effect proposed by \cite{HartungJ.Knapp2001} and \cite{sidik2002simple}.
 
-Maecenas ultricies eros sit amet ante. Ut venenatis velit. Maecenas sed mi eget dui varius euismod. Phasellus aliquet
-volutpat odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque sit
-amet pede ac sem eleifend consectetuer. Nullam elementum, urna vel imperdiet sodales, elit ipsum pharetra ligula,
-ac pretium ante justo a nulla. Curabitur tristique arcu eu metus. Vestibulum lectus. Proin mauris. Proin eu nunc eu
-urna hendrerit faucibus. Aliquam auctor, pede consequat laoreet varius, eros tellus scelerisque quam, pellentesque
-hendrerit ipsum dolor sed augue. Nulla nec lacus.
+Details on model formulation of the one- and two-stage pseudo IPD ANCOVA approaches can be found in \cite{papadimitropoulou2020meta}, Papadimitropoulou (under review). In principle, one-stage (pseudo) IPD meta-analysis offers a plethora of modelling options and choices for a researcher educated in linear mixed models. A typical statistical dilemma is to choose between study-stratified or random study intercepts to allow for the within-trial clustering. \cite{legha2018individual} have provided an excellent simulation study showing that adopting either approach results in minor differences in the summary estimates. In this tool, we offer only the option of study-stratified intercepts, mainly because the mean difference estimate under this model naturally compares to the estimate obtained by the two-stage pseudo IPD ANCOVA approach, where an ANCOVA is fitted per trial in the first step, and in the second step the derived treatment group coefficients (and their respective standard errors) are pooled. We allow more flexibility concerning the within-study residual variances, estimated under the one-stage pseudo IPD approach. We provide four modelling options for the residual variances, possibly allowing more realistic scenarios, for example, residual variances varying by group but not by study (group-specific) \citep{papadimitropoulou2019one, papadimitropoulou2020meta, schmid2020handbook}.
 
-\begin{quote}
-This is an example\cite{Burton2013,Berndt2011,Kucharik2012} for quote text. This is an example for quote text. This is an example for quote text. This is an example for quote text.\cite{Breil2015} This is an example for quote text. This is an example for quote text. This is an example for quote text. This is an example for quote text. This is an example for quote text. This is an example for quote text.\cite{Barth1997} This is an example for quote text. This is an example for quote text. This is an example for quote text. 
-\end{quote}
+\textbf{\texttt{MA-cont:pre/post effect size}} additionally enables the estimation of the within-trial treatment-by-baseline interaction effect, which is rather straightforward when (pseudo) IPD are available. Appropriate adjustments to the one-stage model are made to separate out within-study and between-study effects \citep{hua2017one, riley2020individual}.
 
-\section{Sample for next first level head}\label{sec3}
+\section{Demonstration of \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}} tool}
+\vspace{0.2cm}
 
-\subsection{Example for another second level head}
+We use an example data set of a meta-analysis investigating the effect of calcium supplementation on reducing body weight \citep
+{trowman2006systematic}, which also serves as the default data set in the app. The data set is comprised of reported AD of nine randomised controlled trials comparing calcium supplements to placebo/no treatment and body weight measurements were taken at baseline and follow-up. In addition, baseline imbalance in the favor of treatment is present in these data.
 
-Suspendisse vitae elit. Aliquam arcu neque, ornare in, ullamcorper quis, commodo eu, libero. Fusce sagittis erat at
-erat tristique mollis. Maecenas sapien libero, molestie et, lobortis in, sodales eget, dui. Morbi ultrices rutrum lorem.
-Nam elementum ullamcorper leo. Morbi dui. Aliquam sagittis. Nunc placerat. Pellentesque tristique sodales est.
-Maecenas imperdiet lacinia velit. Cras non urna. Morbi eros pede, suscipit ac, varius vel, egestas non, eros. Praesent
-malesuada, diam id pretium elementum, eros sem dictum tortor, vel consectetuer odio sem sed wisi.
+As discussed earlier, the appropriate approach to synthesise such data is the ANCOVA, and thus per trial and per group, the means and standard deviations of baseline and follow-up measurements, and the within-group correlation should be ideally reported and/or obtained by other summary statistics \citep{higgins2011chapter}.
+\vspace{0.1cm}
 
-Sed feugiat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut pellentesque
-augue sed urna. Vestibulum diam eros, fringilla et, consectetuer eu, nonummy id, sapien. Nullam at lectus. In sagittis
-ultrices mauris. Curabitur malesuada erat sit amet massa. Fusce blandit. Aliquam erat volutpat. Aliquam euismod.
-Aenean vel lectus. Nunc imperdiet justo nec dolor.
+\textbf{Step 1: Input data}
+\vspace{0.1cm}
 
-\subsection{Second level head text}
+The \textquotesingle Load data\textquotesingle\ navigation tab allows the importing of the data set, in a long format and saved as an excel (.xlsx, .xls) file. The structure of the data set is specific, where the order of the variables has to match the one from the default data set (Figure \ref{fig: shiny-input_data}). The users are encouraged to download the template file and prepare their data accordingly while preserving the order and the headers of the variables. 
+%Three options for the comma and decimal separators are available to choose from as many regions across the world use a comma "," for their numbers, which in conjunction with .csv files. 
+%The users may give different labels to their variables, for example, \textquotesingle Mean0\textquotesingle\ for \textquotesingle MeanBaseline\textquotesingle\ as long as these values comprise the third column of the input data set.
 
-Etiam euismod. Fusce facilisis lacinia dui. Suspendisse potenti. In mi erat, cursus id, nonummy sed, ullamcorper
-eget, sapien. Praesent pretium, magna in eleifend egestas, pede pede pretium lorem, quis consectetuer tortor sapien
-facilisis magna. Mauris quis magna varius nulla scelerisque imperdiet. Aliquam non quam. Aliquam porttitor quam
-a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
-convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
+\begin{figure}[ht]
+  \centering \includegraphics[width=1.1\textwidth]{input_data.JPG}
+    \caption{\small {Screenshot of the data entry step for the default data set in long format and output of data table.}} \label{fig: shiny-input_data}
+\end{figure}
 
 
-\subsubsection{Third level head text}
+The output of this step is: 
+a) a data table showing the input data (in this case there are missing data therefore some table cells are blank)
+b) a descriptive summary output, outlining missingness rate and key descriptives statistics (mean, standard deviation, median, etc) for each column. The user can obtain either output by clicking at the respective choice under the \textquotesingle Display\textquotesingle\ button. A brief description of the variables is given under both options.
 
-Aliquam lectus. Vivamus leo. Quisque ornare tellus ullamcorper nulla. Mauris porttitor pharetra tortor. Sed fringilla
-justo sed mauris. Mauris tellus. Sed non leo. Nullam elementum, magna in cursus sodales, augue est scelerisque
-sapien, venenatis congue nulla arcu et pede. Ut suscipit enim vel sapien. Donec congue. Maecenas urna mi, suscipit
-in, placerat ut, vestibulum ut, massa. Fusce ultrices nulla et nisl.
+\vspace{0.1cm}
 
-Etiam ac leo a risus tristique nonummy. Donec dignissim tincidunt nulla. Vestibulum rhoncus molestie odio. Sed
-lobortis, justo et pretium lobortis, mauris turpis condimentum augue, nec ultricies nibh arcu pretium enim. Nunc
-purus neque, placerat id, imperdiet sed, pellentesque nec, nisl. Vestibulum imperdiet neque non sem accumsan laoreet.
-In hac habitasse platea dictumst. Etiam condimentum facilisis libero. Suspendisse in elit quis nisl aliquam dapibus.
-Pellentesque auctor sapien. Sed egestas sapien nec lectus. Pellentesque vel dui vel neque bibendum viverra. Aliquam
-porttitor nisl nec pede. Proin mattis libero vel turpis. Donec rutrum mauris et libero. Proin euismod porta felis.
-Nam lobortis, metus quis elementum commodo, nunc lectus elementum mauris, eget vulputate ligula tellus eu neque.
-Vivamus eu dolor.
+\textbf{Step 2: Fill-in any missing summary data}
+\vspace{0.1cm}
 
-Nulla in ipsum. Praesent eros nulla, congue vitae, euismod ut, commodo a, wisi. Pellentesque habitant morbi
-tristique senectus et netus et malesuada fames ac turpis egestas. Aenean nonummy magna non leo. Sed felis erat,
-ullamcorper in, dictum non, ultricies ut, lectus. Proin vel arcu a odio lobortis euismod. Vestibulum ante ipsum primis
-in faucibus orci luctus et ultrices posuere cubilia Curae; Proin ut est. Aliquam odio. Pellentesque massa turpis, cursus
-eu, euismod nec, tempor congue, nulla. Duis viverra gravida mauris. Cras tincidunt. Curabitur eros ligula, varius ut,
-pulvinar in, cursus faucibus, augue.
+Often in the meta-analysis of pre/post design trials, missing summary data exist, most commonly missing standard deviations and/or the within-group correlations. The tool offers a sequence of steps involving calculations and sensible imputations to fill-in any missing data by clicking in the respective \textit{action buttons} (Figure \ref{fig:shiny_missing}). For example, the \textit{action button} \textquotesingle Fill-in SD from SE\textquotesingle\, calculates any missing standard deviations at baseline, follow-up, of change scores as the product of the respective known standard errors and the square root of the sample sizes.
+Similarly, by clicking on the rest of \textit{action buttons} (in the order they are presented), a full data set is constructed by first assuming any missing standard deviations at follow-up equal to baseline standard deviations and thus the calculation of the within-group correlation is possible by the following formula: \citep{higgins2011chapter}:
 
+\begin{equation*}
+r = \frac{sd^2_{B}+sd^2_{F} - sd^2_{Changescores}}{2sd_{B}sd_{F}},
+\end{equation*}
+where suffixes $B, F$ stand for baseline and follow-up, respectively.
 
+\begin{figure}[ht]
+   \centering \includegraphics[width=1.1\textwidth]{fill_empty.JPG}
+    \caption{\small {Screenshot of the \textquotesingle Fill-in\textquotesingle\ tab that enables stepwise calculation/imputation of missing summary data.}} \label{fig:shiny_missing}
+\end{figure}
 
-\begin{boxtext}
-\section*{Example of Boxtext}%
-This is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext this is sample for boxtext.
-\end{boxtext}
+The sequence of filling-in steps is shown in Figure \ref{fig: shiny-fillin_output}. The last \textit{action button} performs any final calculations necessary to create a complete data set, which is then used for the analysis. This final data set can be viewed under the \textquotesingle View final data\textquotesingle\ tab as shown in Figure \ref{fig: shiny-final_data}.
 
+\begin{figure}[ht]
+  \centering \includegraphics[width=1.1\textwidth]{fill_some.JPG}
+    \caption{\small {Screenshot of the output of the \textquotesingle Fill-in\textquotesingle\ tab, where each \textit{action button} performs a calculation/imputation task.}} \label{fig: shiny-fillin_output}
+\end{figure}
 
-\paragraph{Fourth level head text}
+\begin{figure}[h]
+  \centering \includegraphics[width=1.1\textwidth]{final_data.JPG}
+    \caption{\small {Screenshot of the output of the \textquotesingle View final data\textquotesingle\ tab, where a complete data set is created.}} \label{fig: shiny-final_data}
+\end{figure}
 
-Sed feugiat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut pellentesque
-augue sed urna. Vestibulum diam eros, fringilla et, consectetuer eu, nonummy id, sapien. Nullam at lectus. In sagittis
-ultrices mauris. Curabitur malesuada erat sit amet massa. Fusce blandit. Aliquam erat volutpat. Aliquam euismod.
-Aenean vel lectus. Nunc imperdiet justo nec dolor.
+\vspace{0.1cm}
+\clearpage
 
-Etiam euismod. Fusce facilisis lacinia dui. Suspendisse potenti. In mi erat, cursus id, nonummy sed, ullamcorper
-eget, sapien. Praesent pretium, magna in eleifend egestas, pede pede pretium lorem, quis consectetuer tortor sapien
-facilisis magna. Mauris quis magna varius nulla scelerisque imperdiet. Aliquam non quam. Aliquam porttitor quam
-a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
-convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
+\textbf{Step 3: Choose meta-analysis model for an AD analysis}
+\vspace{0.1cm}
 
-\subparagraph{Fifth level head text}
+Once a complete data set is created, the next step is to navigate to the \textquotesingle Meta-Analysis\textquotesingle\ tab under which a plethora of modelling approaches are offered to the user. This page is structured as such to provide options to select the type of meta-analysis model and additional functionalities, as shown in Figure \ref{fig:shiny-choose_analysis}.
+The default choice of effect size is set to \textquotesingle Mean difference\textquotesingle\, since the most appropriate methods for meta-analysis of pre/post measurements have been, thus far, proposed only for the mean difference. Additional efforts may be put in the future by the developer and contributors of this tool to incorporate other effect size measures, for example standardised mean differences.
 
-Aliquam lectus. Vivamus leo. Quisque ornare tellus ullamcorper nulla. Mauris porttitor pharetra
-tortor. Sed fringilla justo sed mauris. Mauris tellus. Sed non leo. Nullam elementum, magna in cursus sodales, augue
-est scelerisque sapien, venenatis congue nulla arcu et pede. Ut suscipit enim vel sapien. Donec congue. Maecenas
-urna mi, suscipit in, placerat ut, vestibulum ut, massa. Fusce ultrices nulla et nisl.
+The tool is organised as such to offer three key analytic approaches under the respective tabs: \textquotesingle Standard AD\textquotesingle\ ,  \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ . The first tab of standard AD approaches is split to 3 sub-tabs, which perform the routinely used final (follow-up) scores and change scores methods and the reconstructed ANCOVA estimates method. The first interaction step of the user with the app is to choose between a RE or a CE meta-analysis model (default option is the RE). It is also possible to implement the recommended HK \citep{HartungJ.Knapp2001, sidik2002simple} adjustment method by ticking the box. The same selection options apply also to the \textquotesingle Two-stage pseudo IPD\textquotesingle\ approach tab.
 
-Etiam ac leo a risus tristique nonummy. Donec dignissim tincidunt nulla. Vestibulum rhoncus molestie odio. Sed
-lobortis, justo et pretium lobortis, mauris turpis condimentum augue, nec ultricies nibh arcu pretium enim. Nunc
-purus neque, placerat id, imperdiet sed, pellentesque nec, nisl. Vestibulum imperdiet neque non sem accumsan laoreet.
-In hac habitasse platea dictumst. Etiam condimentum facilisis libero. Suspendisse in elit quis nisl aliquam dapibus.
-Pellentesque auctor sapien. Sed egestas sapien nec lectus. Pellentesque vel dui vel neque bibendum viverra. Aliquam
-porttitor nisl nec pede. Proin mattis libero vel turpis. Donec rutrum mauris et libero. Proin euismod porta felis.
-Nam lobortis, metus quis elementum commodo, nunc lectus elementum mauris, eget vulputate ligula tellus eu neque.
-Vivamus eu dolor.
+\begin{figure}[H]
+  \centering \includegraphics[width=1.1\textwidth]{analysis_options.JPG}
+    \caption{\small {Screenshot of the available meta-analysis models.}} \label{fig:shiny-choose_analysis}
+\end{figure}
 
-in faucibus orci luctus et ultrices posuere cubilia Curae; Proin ut est. Aliquam odio. Pellentesque massa turpis, cursus
-eu, euismod nec, tempor congue, nulla. Duis viverra gravida mauris. Cras tincidunt. Curabitur eros ligula, varius ut,
-pulvinar in, cursus faucibus, augue.
+\vspace{0.1cm}
 
-Curabitur tellus magna, porttitor a, commodo a, commodo in, tortor. Donec interdum. Praesent scelerisque. Mae-
-cenas posuere sodales odio. Vivamus metus lacus, varius quis, imperdiet quis, rhoncus a, turpis. Etiam ligula arcu,
-elementum a, venenatis quis, sollicitudin sed, metus. Donec nunc pede, tincidunt in, venenatis vitae, faucibus vel,
-nibh. Pellentesque wisi. Nullam malesuada. Morbi ut tellus ut pede tincidunt porta. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Etiam congue neque id dolor.
-
-Donec et nisl at wisi luctus bibendum. Nam interdum tellus ac libero. Sed sem justo, laoreet vitae, fringilla at,
-adipiscing ut, nibh. Maecenas non sem quis tortor eleifend fermentum. Etiam id tortor ac mauris porta vulputate.
-Integer porta neque vitae massa. Maecenas tempus libero a libero posuere dictum. Vestibulum ante ipsum primis in
-faucibus orci luctus et ultrices posuere cubilia Curae; Aenean quis mauris sed elit commodo placerat. Class aptent
-taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vivamus rhoncus tincidunt libero.
-Etiam elementum pretium justo. Vivamus est. Morbi a tellus eget pede tristique commodo. Nulla nisl. Vestibulum
-sed nisl eu sapien cursus rutrum.
-
-Nulla non mauris vitae wisi posuere convallis. Sed eu nulla nec eros scelerisque pharetra. Nullam varius. Etiam
-dignissim elementum metus. Vestibulum faucibus, metus sit amet mattis rhoncus, sapien dui laoreet odio, nec ultricies
-nibh augue a enim. Fusce in ligula. Quisque at magna et nulla commodo consequat. Proin accumsan imperdiet sem.
-Nunc porta. Donec feugiat mi at justo. Phasellus facilisis ipsum quis ante. In ac elit eget ipsum pharetra faucibus.
-Maecenas viverra nulla in massa.
-
-Nulla in ipsum. Praesent eros nulla, congue vitae, euismod ut, commodo a, wisi. Pellentesque habitant morbi
-tristique senectus et netus et malesuada fames ac turpis egestas. Aenean nonummy magna non leo. Sed felis erat,
-ullamcorper in, dictum non, ultricies ut, lectus. Proin vel arcu a odio lobortis euismod. Vestibulum ante ipsum primis
+\textbf{Step 4: Obtain results}
 
 
-\begin{center}
-\begin{table*}[t]%
-\caption{This is sample table caption.\label{tab1}}
-\centering
-\begin{tabular*}{500pt}{@{\extracolsep\fill}lccD{.}{.}{3}c@{\extracolsep\fill}}
-\toprule
-&\multicolumn{2}{@{}c@{}}{\textbf{Spanned heading\tnote{1}}} & \multicolumn{2}{@{}c@{}}{\textbf{Spanned heading\tnote{2}}} \\\cmidrule{2-3}\cmidrule{4-5}
-\textbf{col1 head} & \textbf{col2 head}  & \textbf{col3 head}  & \multicolumn{1}{@{}l@{}}{\textbf{col4 head}}  & \textbf{col5 head}   \\
-\midrule
-col1 text & col2 text  & col3 text  & 12.34  & col5 text\tnote{1}   \\
-col1 text & col2 text  & col3 text  & 1.62  & col5 text\tnote{2}   \\
-col1 text & col2 text  & col3 text  & 51.809  & col5 text   \\
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}%%[341pt]
-\item Source: Example for table source text.
-\item[1] Example for a first table footnote.
-\item[2] Example for a second table footnote.
-\end{tablenotes}
-\end{table*}
-\end{center}
+For the one- and two-stage pseudo IPD approaches the output is split in two sub-tabs to distinguish between the summary treatment effect and the treatment-by-baseline interaction effect results, respectively. For the AD analyses, we provide the results of three analytic methods to estimate the summary treatment effect.
 
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla
-facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, et
-vehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
-
-
-
-\begin{center}
-\begin{table}[t]%
-\centering
-\caption{This is sample table caption.\label{tab2}}%
-\begin{tabular*}{500pt}{@{\extracolsep\fill}lcccc@{\extracolsep\fill}}
-\toprule
-\textbf{col1 head} & \textbf{col2 head}  & \textbf{col3 head}  & \textbf{col4 head}  & \textbf{col5 head} \\
-\midrule
-col1 text & col2 text  & col3 text  & col4 text  & col5 text\tnote{$\dagger$}   \\
-col1 text & col2 text  & col3 text  & col4 text  & col5 text   \\
-col1 text & col2 text  & col3 text  & col4 text  & col5 text\tnote{$\ddagger$}   \\
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}
-\item Source: Example for table source text.
-\item[$\dagger$] Example for a first table footnote.
-\item[$\ddagger$] Example for a second table footnote.
-\end{tablenotes}
-\end{table}
-\end{center}
-
-
-
-Below is the example\cite{Liska2010,Kucharik2003,Blanchard2015} for bulleted list. Below is the example for bulleted list. Below is the example for bulleted list. Below is the example for bulleted list. Below is the example for bulleted list. Below is the example for bulleted list\footnote{This is an example for footnote.}:
 \begin{itemize}
-\item bulleted list entry sample bulleted list entry.\cite{Lauritzen2011} sample list entry text. 
-\item bulleted list entry sample bulleted list entry. bulleted list entry sample bulleted list entry. bulleted list entry sample bulleted list entry.
-\item bulleted list entry sample bulleted list entry.\cite{Klima2017} bulleted list entry sample bulleted list entry.\cite{Dukowicz2000} sample list entry text.  bulleted list entry sample bulleted list entry.
-\item sample list entry text. sample list entry text.  
+\item Summary treatment effect
 \end{itemize}
-
-Suspendisse vel felis. Ut lorem lorem, interdum eu, tincidunt sit amet, laoreet vitae, arcu. Aenean faucibus pede eu
-ante. Praesent enim elit, rutrum at, molestie non, nonummy vel, nisl. Ut lectus eros, malesuada sit amet, fermentum
-eu, sodales cursus, magna. Donec eu purus. Quisque vehicula, urna sed ultricies auctor, pede lorem egestas dui, et
-convallis elit erat sed nulla. Donec luctus. Curabitur et nunc. Aliquam dolor odio, commodo pretium, ultricies non,
-pharetra in, velit. Integer arcu est, nonummy in, fermentum faucibus, egestas vel, odio.
-
-Sed commodo posuere pede. Mauris ut est. Ut quis purus. Sed ac odio. Sed vehicula hendrerit sem. Duis non
-odio. Morbi ut dui. Sed accumsan risus eget odio. In hac habitasse platea dictumst. Pellentesque non elit. Fusce
-sed justo eu urna porta tincidunt. Mauris felis odio, sollicitudin sed, volutpat a, ornare ac, erat. Morbi quis dolor. Donec pellentesque, erat ac sagittis semper, nunc dui lobortis purus, quis congue purus metus ultricies tellus. Proin
-et quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Praesent sapien
-turpis, fermentum vel, eleifend faucibus, vehicula eu, lacus.
-
-
-Below is the sample for description list. Below is the example for description list. Below is the example for description list. Below is the example for description list. Below is the example for description list. Below is the example for description list:\\[12pt]
-
-
-\noindent\textbf{Description sample:}
-
-\begin{description}
-\item[first entry] description text. description text.\cite{Kucharik2011,Kucharik2014,Loubere2005} description text. description text. description text. description text. description text. 
-\item[second long entry] description text. description text. description text. description text. description text. description text. description text. 
-\item[third entry] description text. description text. description text. description text. description text. 
-\item[fourth entry] description text. description text. 
-\end{description}
-
-
-\noindent\textbf{Numbered list items sample:}
-
-\begin{enumerate}[1.]
-\item First level numbered list entry. sample numbered list entry. 
-
-\item First numbered list entry. sample numbered list entry. Numbered list entry.\cite{Caramana1998} sample numbered list entry. Numbered list entry. sample numbered list entry. 
-
-\begin{enumerate}[a.]
-\item Second level alpabetical list entry. Second level alpabetical list entry. Second level alpabetical list entry.\cite{Hoch2009} Second level alpabetical list entry. 
-
-\item Second level alpabetical list entry. Second level alpabetical list entry.\cite{Shashkov1996,Knupp1999,Knupp1999}
-
-\begin{enumerate}[ii.]
-\item Third level lowercase roman numeral list entry. Third level lowercase roman numeral list entry. Third level lowercase roman numeral list entry. 
-
-\item Third level lowercase roman numeral list entry. Third level lowercase roman numeral list entry.\cite{Kamm2000}
-\end{enumerate}
-
-\item Second level alpabetical list entry. Second level alpabetical list entry.\cite{Taylor1937}
-\end{enumerate}
-
-\item First level numbered list entry. sample numbered list entry. Numbered list entry. sample numbered list entry. Numbered list entry. 
-
-\item Another first level numbered list entry. sample numbered list entry. Numbered list entry. sample numbered list entry. Numbered list entry. 
-\end{enumerate}
-
-\noindent\textbf{un-numbered list items sample:}
-
-\begin{enumerate}[]
-\item Sample unnumberd list text..
-\item Sample unnumberd list text.
-\item sample unnumberd list text. 
-\item Sample unnumberd list text.
-\end{enumerate}
-
-\section{Examples for enunciations}\label{sec4}
-
-\begin{theorem}[Theorem subhead]\label{thm1}
-Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
-\end{theorem}
-
-Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. In hac habitasse platea dictumst. Integer tempus convallis augue. Etiam facilisis.
-Nunc elementum fermentum wisi. Aenean placerat. Ut imperdiet, enim sed gravida sollicitudin, felis odio placerat
-quam, ac pulvinar elit purus eget enim. Nunc vitae tortor. Proin tempus nibh sit amet nisl. Vivamus quis tortor
-vitae risus porta vehicula.
-
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla
-facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, et
-vehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
-
-\begin{proposition}
-Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
-\end{proposition}
-
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus
-viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
-
-Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. In hac habitasse platea dictumst. Integer tempus convallis augue. Etiam facilisis.
-Nunc elementum fermentum wisi. Aenean placerat. Ut imperdiet, enim sed gravida sollicitudin, felis odio placerat
-quam, ac pulvinar elit purus eget enim. Nunc vitae tortor. Proin tempus nibh sit amet nisl. Vivamus quis tortor
-vitae risus porta vehicula.
-
-\begin{definition}[Definition sub head]
-Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text.
-\end{definition}
-
-Sed commodo posuere pede. Mauris ut est. Ut quis purus. Sed ac odio. Sed vehicula hendrerit sem. Duis non
-odio. Morbi ut dui. Sed accumsan risus eget odio. In hac habitasse platea dictumst. Pellentesque non elit. Fusce
-sed justo eu urna porta tincidunt. Mauris felis odio, sollicitudin sed, volutpat a, ornare ac, erat. Morbi quis dolor.
-Donec pellentesque, erat ac sagittis semper, nunc dui lobortis purus, quis congue purus metus ultricies tellus. Proin
-et quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Praesent sapien
-turpis, fermentum vel, eleifend faucibus, vehicula eu, lacus.
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec odio elit,
-dictum in, hendrerit sit amet, egestas sed, leo. Praesent feugiat sapien aliquet odio. Integer vitae justo. Aliquam
-vestibulum fringilla lorem. Sed neque lectus, consectetuer at, consectetuer sed, eleifend ac, lectus. Nulla facilisi.
-Pellentesque eget lectus. Proin eu metus. Sed porttitor. In hac habitasse platea dictumst. Suspendisse eu lectus. Ut
-mi mi, lacinia sit amet, placerat et, mollis vitae, dui. Sed ante tellus, tristique ut, iaculis eu, malesuada ac, dui.
-Mauris nibh leo, facilisis non, adipiscing quis, ultrices a, dui.
-
-\begin{proof}
-Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
-\end{proof}
-
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero,
-pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna,
-vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque
-a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt
-urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris.
-
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus
-viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
-
-\begin{proof}[Proof of Theorem~\ref{thm1}]
-Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
-\end{proof}
-
-Etiam euismod. Fusce facilisis lacinia dui. Suspendisse potenti. In mi erat, cursus id, nonummy sed, ullamcorper
-eget, sapien. Praesent pretium, magna in eleifend egestas, pede pede pretium lorem, quis consectetuer tortor sapien
-facilisis magna. Mauris quis magna varius nulla scelerisque imperdiet. Aliquam non quam. Aliquam porttitor quam
-a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
-convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
-Aliquam lectus. Vivamus leo. Quisque ornare tellus ullamcorper nulla. Mauris porttitor pharetra tortor. Sed fringilla
-justo sed mauris. Mauris tellus. Sed non leo. Nullam elementum, magna in cursus sodales, augue est scelerisque
-sapien, venenatis congue nulla arcu et pede. Ut suscipit enim vel sapien. Donec congue. Maecenas urna mi, suscipit
-in, placerat ut, vestibulum ut, massa. Fusce ultrices nulla et nisl.
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec odio elit,
-dictum in, hendrerit sit amet, egestas sed, leo. Praesent feugiat sapien aliquet odio. Integer vitae justo. Aliquam
-vestibulum fringilla lorem. Sed neque lectus, consectetuer at, consectetuer sed, eleifend ac, lectus. Nulla facilisi.
-Pellentesque eget lectus. Proin eu metus. Sed porttitor. In hac habitasse platea dictumst. Suspendisse eu lectus. Ut Curabitur tellus magna, porttitor a, commodo a, commodo in, tortor. Donec interdum. Praesent scelerisque. Mae-
-cenas posuere sodales odio. Vivamus metus lacus, varius quis, imperdiet quis, rhoncus a, turpis. Etiam ligula arcu,
-elementum a, venenatis quis, sollicitudin sed, metus. Donec nunc pede, tincidunt in, venenatis vitae, faucibus vel,
-
-
-\begin{sidewaystable}%[h]
-\caption{Sideways table caption. For decimal alignment refer column 4 to 9 in tabular* preamble.\label{tab3}}%
-\begin{tabular*}{\textheight}{@{\extracolsep\fill}lccD{.}{.}{4}D{.}{.}{4}D{.}{.}{4}D{.}{.}{4}D{.}{.}{4}D{.}{.}{4}@{\extracolsep\fill}}%
-\toprule
-  & \textbf{col2 head} & \textbf{col3 head} & \multicolumn{1}{c}{\textbf{10}} &\multicolumn{1}{c}{\textbf{20}} &\multicolumn{1}{c}{\textbf{30}} &\multicolumn{1}{c}{\textbf{10}} &\multicolumn{1}{c}{\textbf{20}} &\multicolumn{1}{c}{\textbf{30}} \\
-\midrule
-  &col2 text &col3 text &0.7568&1.0530&1.2642&0.9919&1.3541&1.6108 \\
-  & &col2 text &12.5701 &19.6603&25.6809&18.0689&28.4865&37.3011 \\
-3 &col2 text  & col3 text &0.7426&1.0393&1.2507&0.9095&1.2524&1.4958 \\
-  & &col3 text &12.8008&19.9620&26.0324&16.6347&26.0843&34.0765 \\
-  & col2 text & col3 text &0.7285&1.0257&1.2374&0.8195&1.1407&1.3691\tnote{*} \\
-  & & col3 text &13.0360&20.2690&26.3895&15.0812&23.4932&30.6060\tnote{\dagger} \\
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}%%[\textheight]
-\item[*] First sideways table footnote. Sideways table footnote. Sideways table footnote. Sideways table footnote.
-\item[$\dagger$] Second sideways table footnote. Sideways table footnote. Sideways table footnote. Sideways table footnote.
-\end{tablenotes}
-\end{sidewaystable}
-
-\begin{sidewaysfigure}
-\centerline{\includegraphics[width=542pt,height=9pc,draft]{empty}}
-\caption{Sideways figure caption. Sideways figure caption. Sideways figure caption. Sideways figure caption. Sideways figure caption. Sideways figure caption.\label{fig3}}
-\end{sidewaysfigure}
-
-nibh. Pellentesque wisi.\cite{Kucharik2012} Nullam malesuada. Morbi ut tellus ut pede tincidunt porta. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Etiam congue neque id dolor.
-
-\begin{algorithm}
-\caption{Pseudocode for our algorithm}\label{alg1}
-\begin{algorithmic}
-  \For each frame
-  \For water particles $f_{i}$
-  \State compute fluid flow\cite{Hirt1974}
-  \State compute fluid--solid interaction\cite{Benson1992}
-  \State apply adhesion and surface tension\cite{Margolin2003}
-  \EndFor
-   \For solid particles $s_{i}$
-   \For neighboring water particles $f_{j}$
-   \State compute virtual water film \\(see Section~\ref{sec3})
-   \EndFor
-   \EndFor
-   \For solid particles $s_{i}$
-   \For neighboring water particles $f_{j}$
-   \State compute growth direction vector \\(see Section~\ref{sec2})
-   \EndFor
-   \EndFor
-   \For solid particles $s_{i}$
-   \For neighboring water particles $f_{j}$
-   \State compute $F_{\theta}$ (see Section~\ref{sec1})
-   \State compute $CE(s_{i},f_{j})$ \\(see Section~\ref{sec3})
-   \If $CE(b_{i}, f_{j})$ $>$ glaze threshold
-   \State $j$th water particle's phase $\Leftarrow$ ICE
-   \EndIf
-   \If $CE(c_{i}, f_{j})$ $>$ icicle threshold
-   \State $j$th water particle's phase $\Leftarrow$ ICE
-   \EndIf
-   \EndFor
-   \EndFor
-  \EndFor
-\end{algorithmic}
-\end{algorithm}
-
-Donec et nisl at wisi luctus bibendum. Nam interdum tellus ac libero. Sed sem justo, laoreet vitae, fringilla at,
-adipiscing ut, nibh. Maecenas non sem quis tortor eleifend fermentum. Etiam id tortor ac mauris porta vulputate.
-Integer porta neque vitae massa.\cite{Hirt1974,Benson1992}  Maecenas tempus libero a libero posuere dictum. Vestibulum ante ipsum primis in
-faucibus orci luctus et ultrices posuere cubilia Curae; Aenean quis mauris sed elit commodo placerat. Class aptent
-taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vivamus rhoncus tincidunt libero.
-Etiam elementum pretium justo. Vivamus est. Morbi a tellus eget pede tristique commodo.\cite{Benson1992} Nulla nisl. Vestibulum
-sed nisl eu sapien cursus rutrum.
-
-Pellentesque wisi. Nullam malesuada. Morbi ut tellus ut pede tincidunt porta. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Etiam congue neque id dolor.
-
-Donec et nisl at wisi luctus bibendum. Nam interdum tellus ac libero. Sed sem justo, laoreet vitae, fringilla at,
-adipiscing ut, nibh. Maecenas non sem quis tortor eleifend fermentum. Etiam id tortor ac mauris porta vulputate.
-Integer porta neque vitae massa. Maecenas tempus libero a libero posuere dictum. Vestibulum ante ipsum primis in
-faucibus orci luctus et ultrices posuere cubilia Curae; Aenean quis mauris sed elit commodo placerat. Class aptent
-taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Vivamus rhoncus tincidunt libero.
-Etiam elementum pretium justo. Vivamus est. Morbi a tellus eget pede tristique commodo. Nulla nisl. Vestibulum
-sed nisl eu sapien cursus rutrum.
-
-\begin{equation}\label{eq23}
- \|\tilde{X}(k)\|^2
- =\frac{\left\|\sum\limits_{i=1}^{p}\tilde{Y}_i(k)+\sum\limits_{j=1}^{q}\tilde{Z}_j(k) \right\|^2}{(p+q)^2}
- \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.
-\end{equation}
-
-Sed feugiat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut pellentesque
-augue sed urna. Vestibulum diam eros, fringilla et, consectetuer eu, nonummy id, sapien. Nullam at lectus. In sagittis
-ultrices mauris. Curabitur malesuada erat sit amet massa. Fusce blandit. Aliquam erat volutpat. Aliquam euismod.
-Aenean vel lectus. Nunc imperdiet justo nec dolor.
-
-Etiam euismod. Fusce facilisis lacinia dui. Suspendisse potenti. In mi erat, cursus id, nonummy sed, ullamcorper
-eget, sapien. Praesent pretium, magna in eleifend egestas, pede pede pretium lorem, quis consectetuer tortor sapien
-facilisis magna. Mauris quis magna varius nulla scelerisque imperdiet. Aliquam non quam. Aliquam porttitor quam
-a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
-convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
-
-\begin{equation}\label{eq24}
- \|\tilde{X}(k)\|^2
- =\frac{\left\|\sum\limits_{i=1}^{p}\tilde{Y}_i(k)+\sum\limits_{j=1}^{q}\tilde{Z}_j(k) \right\|^2}{(p+q)^2}
- \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.
-\end{equation}
-
-Aliquam lectus. Vivamus leo. Quisque ornare tellus ullamcorper nulla. Mauris porttitor pharetra
-tortor. Sed fringilla justo sed mauris. Mauris tellus. Sed non leo. Nullam elementum, magna in cursus sodales, augue
-est scelerisque sapien, venenatis congue nulla arcu et pede. Ut suscipit enim vel sapien. Donec congue. Maecenas
-urna mi, suscipit in, placerat ut, vestibulum ut, massa. Fusce ultrices nulla et nisl.
-
-Etiam ac leo a risus tristique nonummy. Donec dignissim tincidunt nulla. Vestibulum rhoncus molestie odio. Sed
-lobortis, justo et pretium lobortis, mauris turpis condimentum augue, nec ultricies nibh arcu pretium enim. Nunc
-purus neque, placerat id, imperdiet sed, pellentesque nec, nisl. Vestibulum imperdiet neque non sem accumsan laoreet.
-In hac habitasse platea dictumst. Etiam condimentum facilisis libero. Suspendisse in elit quis nisl aliquam dapibus.
-Pellentesque auctor sapien. Sed egestas sapien nec lectus. Pellentesque vel dui vel neque bibendum viverra. Aliquam
-porttitor nisl nec pede. Proin mattis libero vel turpis. Donec rutrum mauris et libero. Proin euismod porta felis.
-Nam lobortis, metus quis elementum commodo, nunc lectus elementum mauris, eget vulputate ligula tellus eu neque.
-Vivamus eu dolor.
-
-
-
-
-\section{Conclusions}\label{sec5}
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae,
-felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec
-vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus
-sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel
-leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur
-auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-Duis eget orci sit amet orci dignissim rutrum.
-
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero,
-pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna,
-vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque
-a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt
-urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris.
-
-%\backmatter
-
-\section*{Acknowledgments}
-This is acknowledgment text.\cite{Kenamond2013} Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. This is acknowledgment text. Provide text here. 
-
-\subsection*{Author contributions}
-
-This is an author contribution text. This is an author contribution text. This is an author contribution text. This is an author contribution text. This is an author contribution text. 
-
-\subsection*{Financial disclosure}
-
-None reported.
-
-\subsection*{Conflict of interest}
-
-The authors declare no potential conflict of interests.
-
-
-\section*{Supporting information}
-
-The following supporting information is available as part of the online article:
-
-\noindent
-\textbf{Figure S1.}
-{500{\uns}hPa geopotential anomalies for GC2C calculated against the ERA Interim reanalysis. The period is 1989--2008.}
-
-\noindent
-\textbf{Figure S2.}
-{The SST anomalies for GC2C calculated against the observations (OIsst).}
-
-
-\appendix
-
-\section{Section title of first appendix\label{app1}}
-
-Use \verb+\begin{verbatim}...\end{verbatim}+ for program codes without math. Use \verb+\begin{alltt}...\end{alltt}+ for program codes with math. Based on the text provided inside the optional argument of \verb+\begin{code}[Psecode|Listing|Box|Code|+\hfill\break \verb+Specification|Procedure|Sourcecode|Program]...+ \verb+\end{code}+ tag corresponding boxed like floats are generated. Also note that \verb+\begin{code}[Code|Listing]...+ \verb+\end{code}+ tag with either Code or Listing text as optional argument text are set with computer modern typewriter font.  All other code environments are set with normal text font. Refer below example:
-
-\begin{lstlisting}[caption={Descriptive Caption Text},label=DescriptiveLabel]
-for i:=maxint to 0 do
-begin
-{ do nothing }
-end;
-Write('Case insensitive ');
-WritE('Pascal keywords.');
-\end{lstlisting}
-
-
-
-\subsection{Subsection title of first appendix\label{app1.1a}}
-
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero,
-pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna,
-vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque
-a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt
-urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris.
-
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus
-viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
-
-\subsubsection{Subsection title of first appendix\label{app1.1.1a}}
-
-\noindent\textbf{Unnumbered figure}
-
-
-\begin{center}
-\includegraphics[width=7pc,height=8pc,draft]{empty}
-\end{center}
-
-
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla
-facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, et
-vehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
-Suspendisse vel felis. Ut lorem lorem, interdum eu, tincidunt sit amet, laoreet vitae, arcu. Aenean faucibus pede eu
-ante. Praesent enim elit, rutrum at, molestie non, nonummy vel, nisl. Ut lectus eros, malesuada sit amet, fermentum
-eu, sodales cursus, magna. Donec eu purus. Quisque vehicula, urna sed ultricies auctor, pede lorem egestas dui, et
-convallis elit erat sed nulla. Donec luctus. Curabitur et nunc. Aliquam dolor odio, commodo pretium, ultricies non,
-pharetra in, velit. Integer arcu est, nonummy in, fermentum faucibus, egestas vel, odio.
-
-\section{Section title of second appendix\label{app2}}%
-
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla
-facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, et
-vehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
-Suspendisse vel felis. Ut lorem lorem, interdum eu, tincidunt sit amet, laoreet vitae, arcu. Aenean faucibus pede eu
-ante. Praesent enim elit, rutrum at, molestie non, nonummy vel, nisl. Ut lectus eros, malesuada sit amet, fermentum
-eu, sodales cursus, magna. Donec eu purus. Quisque vehicula, urna sed ultricies auctor, pede lorem egestas dui, et
-convallis elit erat sed nulla. Donec luctus. Curabitur et nunc. Aliquam dolor odio, commodo pretium, ultricies non,
-pharetra in, velit. Integer arcu est, nonummy in, fermentum faucibus, egestas vel, odio.
-
-%== Figure 4 ==
-%% Example for figure inside appendix
-\begin{figure}[t]
-\centerline{\includegraphics[height=10pc,width=78mm,draft]{empty}}
-\caption{This is an example for appendix figure.\label{fig5}}
+The generated output under the \textquotesingle Standard AD\textquotesingle\ tab is identical for the three approaches and consists of a verbose print out and standard visualisations of the meta-analysis results. For example, if we click on the \textquotesingle ANCOVA Recovered effect estimates\textquotesingle\ (which is more appropriate than final or change scores analyses), the results are provided in the verbose summary of the \texttt{rma} function of \texttt{metafor}. The summary treatment effect is estimated equal to -0.48 kg [95\% CI: -1.23, 0.27] (Figure \ref{fig:shiny-ancova_res}). Additional relevant output can be found, for example the estimate of between-study heterogeneity $\tau^2$, in this case estimated equal to 0.63 and the $I^2$ and $H^2$ statistics. Identical output and very similar results can be found under sub-tab \textquotesingle Treatment effect\textquotesingle\ of the \textquotesingle Two-stage pseudo IPD\textquotesingle\ tab.
+
+\begin{figure}[ht]
+  \centering \includegraphics[width=1.1\textwidth]{ANCOVA_res.JPG}
+    \caption{\small {Screenshot of results based on the ANCOVA recovered estimates approach.}} \label{fig:shiny-ancova_res}
 \end{figure}
 
-\subsection{Subsection title of second appendix\label{app2.1a}}
+Under the \textquotesingle One-stage pseudo IPD\textquotesingle\ tab, we initially provide a data table of the generated pseudo IPD baselines and outcomes of each pseudo participant to enable the users to familiarise themselves with the pseudo IPD approach. Each line is a pseudo IPD observation similar to a true IPD one, and the user can navigate along the various rows of the dataframe. This pseudo IPD set is subsequently used to fit the one- and two-stage ANCOVA methods. 
 
-Sed commodo posuere pede. Mauris ut est. Ut quis purus. Sed ac odio. Sed vehicula hendrerit sem. Duis non odio.
-Morbi ut dui. Sed accumsan risus eget odio. In hac habitasse platea dictumst. Pellentesque non elit. Fusce sed justo
-eu urna porta tincidunt. Mauris felis odio, sollicitudin sed, volutpat a, ornare ac, erat. Morbi quis dolor. Donec
-pellentesque, erat ac sagittis semper, nunc dui lobortis purus, quis congue purus metus ultricies tellus. Proin et quam.
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Praesent sapien turpis,
-fermentum vel, eleifend faucibus, vehicula eu, lacus.
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec odio elit,
-dictum in, hendrerit sit amet, egestas sed, leo. Praesent feugiat sapien aliquet odio. Integer vitae justo. Aliquam
-vestibulum fringilla lorem. Sed neque lectus, consectetuer at, consectetuer sed, eleifend ac, lectus. Nulla facilisi.
-Pellentesque eget lectus. Proin eu metus. Sed porttitor. In hac habitasse platea dictumst. Suspendisse eu lectus. Ut
-mi mi, lacinia sit amet, placerat et, mollis vitae, dui. Sed ante tellus, tristique ut, iaculis eu, malesuada ac, dui.
-Mauris nibh leo, facilisis non, adipiscing quis, ultrices a, dui.
-
-\subsubsection{Subsection title of second appendix\label{app2.1.1a}}
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae,
-felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec
-vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus
-sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel
-leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur
-auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam.
-Duis eget orci sit amet orci dignissim rutrum.
-
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero,
-pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna,
-vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque
-a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt
-urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris.
-
-\begin{center}
-\begin{table}[b]%
-\centering
-\caption{This is an example of Appendix table showing food requirements of army, navy and airforce.\label{tab4}}%
-\begin{tabular*}{300pt}{@{\extracolsep\fill}lcc@{\extracolsep\fill}}%
-\toprule
-\textbf{col1 head} & \textbf{col2 head} & \textbf{col3 head} \\
-\midrule
-col1 text & col2 text & col3 text \\
-col1 text & col2 text & col3 text \\
-col1 text & col2 text & col3 text\\
-\bottomrule
-\end{tabular*}
-\end{table}
-\end{center}
+The results of the summary treatment effect under this approach are given in the second table (in grey) of this tab (Figure \ref{fig:shiny-one-stage}). We provide four possible options to model the within-study residual variances to allow the user to assume more realistic scenarios depending on the data specificities. We encourage the user to think which assumption suits his/her data best or present all four, if possible. When interested in a summary estimate that naturally compares with the two-stage approach or the AD ANCOVA recovered estimates, one should choose to present the results from the study-specific within-study residual variance model. In this example, the summary treatment effect was estimated equal to -0.43 kg [95\% CI: -1.16, -0.3].
 
 
-Example for an equation inside appendix
-\begin{equation}
-\mathcal{L}\quad \mathbf{\mathcal{L}} = i \bar{\psi} \gamma^\mu D_\mu \psi - \frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} - m \bar{\psi} \psi\label{eq25}
-\end{equation}
+\begin{figure}[ht]
+  \centering \includegraphics[width=1.1\textwidth]{one_stage.JPG}
+    \caption{\small {Screenshot of one-stage pseudo IPD approach, the pseudo IPD set and the results across the various options for the within-study residual variances.}} \label{fig:shiny-one-stage}
+\end{figure}
 
-\section{Example of another appendix section\label{app3}}%
+\begin{itemize}
+\item Treatment-by-baseline interaction effect 
+\end{itemize}
+The within-trial treatment-by-baseline interaction effect can be obtained under the homonym sub-tabs of the \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ tabs. In the first approach, the results are presented in a table, with four distinct options of the within-study residual variance (Figure \ref{fig:shiny-one-int} ). If we focus on the study-specific assumption for the residual variances, then the interaction effect is estimated equal to 0.006 [95\% CI: -0.033, 0.045], indicating a non-significant relationship at participant level between the baseline score and the treatment effect.
 
-This is sample for paragraph text this is sample for paragraph text  this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text this is sample for paragraph text
+\begin{figure} [ht] 
+  \centering \includegraphics[width=1.1\textwidth]{onestage_int.JPG}
+    \caption{\small {Screenshot of the results for the treatment-by-baseline interaction effect under the one-stage pseudo IPD approach.}} \label{fig:shiny-one-int}
+\end{figure}
+
+Very similar results may be found under the \textquotesingle Two-stage pseudo IPD\textquotesingle\ tab. Under this analysis, it is possible to switch to a common(fixed) interaction effect and to include the HK correction for constructing a 95\% confidence interval for the summary interaction effect.
+
+%\newpage
+\vspace{0.1cm}
+\textbf{Step 5: Visualise results via forest plots and funnel plots}
+
+
+For the standard AD and the two-stage pseudo IPD approach, we provide the a forest plot, to graphically present the study findings and the summary effect and a funnel plot, to visually inspect publication bias. Both visualisations for the ANCOVA Recovered effect estimates are shown in Figure \ref{fig:shiny-forest_funnel}. Any choices by the user to switch to a CE model or to incorporate the HK approach under the RE model are automatically rendered to the forest and funnel plots. Both plots can be saved in a portable document format (PDF) by clicking at the respective \textit{action buttons}.
+
+\begin{figure} [H]
+  \centering \includegraphics[width=1.1\textwidth]{forest_funnel.JPG}
+    \caption{\small {Screenshot of the forest plot and funnel plot for the treatment effect RE analysis under the ANCOVA Recovered estimates method.}} \label{fig:shiny-forest_funnel}
+\end{figure}
+
+\vspace{0.1cm}
+
+\textbf{Step 6: Save and extract output}
+
+All plots produced by the app can be downloaded as a portable document format (PDF) or as a portable network graphic (PNG). In addition, the analyses under the \textquotesingle Standard AD\textquotesingle\ tab can be saved by clicking on the \textquotesingle PRINT\textquotesingle\ \textit{action button} at the bottom of the page. This opens a dialogue window where the page (prior being sent to the printer) can be saved in a PDF format. We additionally provide three options to interact with the output of the tables under the \textquotesingle One-stage pseudo IPD\textquotesingle\ tab. It is possible to copy the table (and pasting it to a Word document), save it as PDF or send it to the printer, by clicking at the respective buttons. 
+
+\section{Discussion}
+
+\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}} facilitates performing standard AD and more sophisticated meta-analyses of continuous outcome data measured at baseline and follow-up, in a straightforward manner. It is a freely available tool, aspiring to attract a wide audience of technical and non-technical meta-analysts. Its development is rooted in the need to tackle the barrier of statistical expertise and software fluency to perform the most appropriate method to meta-analyse such data, that is the ANCOVA.
+
+A large toolbox of methods is offered to the user and while simple "pointing and clicking" can produce a handful of results, we encourage the user to treat the results with critical thinking. When possible, we suggest to consult a statistician or a meta-analysis expert to offer help in interpretation of conclusions or modelling assumptions. It is a conscious choice to supply more than one meta-analysis method to educate and draw attention to the possibility of conflicting or markedly different results obtained by the available methods (as found when analysing the default data set of \cite{trowman2007impact}). As discussed throughout this paper, we recommend to undertake ANCOVA approaches to synthesize randomised trials measuring continuous outcomes at baseline and follow-up times. Our preference lies with the pseudo IPD ANCOVA approach, implemented in a one- or two-stage fashion for being more flexible and offering exploration of effect modification. The AD ANCOVA recovered estimates approach is a good alternative, when a) treatment effect modification is not anticipated and b) equal within-study variances may be assumed.
+
+The landscape of free and commercial software for meta-analysis is vast, especially in the medical field. We do not wish to provide an exhaustive overview of existing software options yet some comparisons to \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}} are more natural. We restrict the space to freely available software and to user-friendly interfaces, which do not require knowledge of any programming or statistical language, for example R. The meta-analysis via \texttt{Shiny} (MAVIS) \citep{hamilton2014meta} performs meta-analysis of continuous outcomes using only follow-up and cannot handle baseline measurements. It is a great tool with graphical functionalities similar to our newly developed app, however it requires manual input of the data (copy/paste from excel file). %Hence, this tool offers similar functionalities to ours but fails to conduct the appropriate analysis for baseline measured data.
+Similar software (using R in backend but not requiring knowledge of R), are the meta-analysis function of JASP \citep{JASP2020} and the MAJOR module by jamovi \citep{jamovi2021}. Both are rather new and exciting programs, sharing some of the same creators and heavily relying on \texttt{metafor} functionalities. Neither program offers ANCOVA approaches (AD or pseudo IPD options) nor the recommended HK approach to estimate the standard error of the summary effect. In addition, at the moment, the effect sizes need to be entered in JASP, as the software cannot compute them from group-level summary data. Hence, these software options while offer similar functionalities and a "point and click" interface as the \texttt{shiny} environment, do not offer the core statistical approach which distinguishes \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}.
+
+Building \texttt{shiny} apps has grown in popularity and its community of developers and users is getting larger acknowledging how powerful this tool can be in education, research, industry (by deploying large scale tools) and more. In the evidence synthesis setting, we distinguish great \texttt{shiny} examples (with different scopes than ours), e.g., \texttt{MetaInsight} for network meta-analysis \citep{owen2019metainsight}, \texttt{MetaDTA} \citep{freeman2019development} and \texttt{IPDmada} \citep{wang2021ipdmada} for meta-analysis of AD and IPD diagnostic tests, respectively and \texttt{robvis} for risk-of-bias assessment \citep{mcguinness2021risk}.
+
+Our tool may also be improved and extended and we welcome any suggestions by the readers/users. A natural extension would accommodate additional effect sizes, for example, standardised mean difference or ratio of means. However, this extension requires methodological work prior to software implementation. In addition, the potential of sensitivity analysis by varying the values of the imputed missing statistics, e.g., within-group correlations can be explored in the future.
 
 
 
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero,
-pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna,
-vitae ornare odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras nec ante. Pellentesque
-a nulla. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tincidunt
-urna. Nulla ullamcorper vestibulum turpis. Pellentesque cursus luctus mauris.
-
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus
-viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
 
 
-\begin{equation}
-\mathcal{L} = i \bar{\psi} \gamma^\mu D_\mu \psi
-    - \frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu} - m \bar{\psi} \psi
-\label{eq26}
-\end{equation}
-
-Nulla malesuada porttitor diam. Donec felis erat, congue non, volutpat at, tincidunt tristique, libero. Vivamus
-viverra fermentum felis. Donec nonummy pellentesque ante. Phasellus adipiscing semper elit. Proin fermentum massa
-ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
-at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. Sed lacinia
-nulla vitae enim. Pellentesque tincidunt purus vel magna. Integer non enim. Praesent euismod nunc eu purus. Donec
-bibendum quam in tellus. Nullam cursus pulvinar lectus. Donec et mi. Nam vulputate metus eu enim. Vestibulum
-pellentesque felis eu massa.
-
-Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. In hac habitasse platea dictumst. Integer tempus convallis augue. Etiam facilisis.
-Nunc elementum fermentum wisi. Aenean placerat. Ut imperdiet, enim sed gravida sollicitudin, felis odio placerat
-quam, ac pulvinar elit purus eget enim. Nunc vitae tortor. Proin tempus nibh sit amet nisl. Vivamus quis tortor
-vitae risus porta vehicula.
-
-
-\begin{center}
-\begin{tabular*}{300pt}{@{\extracolsep\fill}lcc@{\extracolsep\fill}}%
-\toprule
-\textbf{col1 head} & \textbf{col2 head} & \textbf{col3 head} \\
-\midrule
-col1 text & col2 text & col3 text \\
-col1 text & col2 text & col3 text \\
-col1 text & col2 text & col3 text \\
-\bottomrule
-\end{tabular*}
-\end{center}
-
-
-Quisque ullamcorper placerat ipsum. Cras nibh. Morbi vel justo vitae lacus tincidunt ultrices. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. In hac habitasse platea dictumst. Integer tempus convallis augue. Etiam facilisis.
-Nunc elementum fermentum wisi. Aenean placerat. Ut imperdiet, enim sed gravida sollicitudin, felis odio placerat
-quam, ac pulvinar elit purus eget enim. Nunc vitae tortor. Proin tempus nibh sit amet nisl. Vivamus quis tortor
-vitae risus porta vehicula.
-
-Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac
-venenatis arcu wisi vel nisl. Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue
-quam, in hendrerit risus eros eget felis. Maecenas eget erat in sapien mattis porttitor. Vestibulum porttitor. Nulla
-facilisi. Sed a turpis eu lacus commodo facilisis. Morbi fringilla, wisi in dignissim interdum, justo lectus sagittis dui, evehicula libero dui cursus dui. Mauris tempor ligula sed lacus. Duis cursus enim ut augue. Cras ac magna. Cras nulla.
-Nulla egestas. Curabitur a leo. Quisque egestas wisi eget nunc. Nam feugiat lacus vel est. Curabitur consectetuer.
-
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec odio elit,
-dictum in, hendrerit sit amet, egestas sed, leo. Praesent feugiat sapien aliquet odio. Integer vitae justo. Aliquam
-vestibulum fringilla lorem. Sed neque lectus, consectetuer at, consectetuer sed, eleifend ac, lectus. Nulla facilisi.
-Pellentesque eget lectus. Proin eu metus. Sed porttitor. In hac habitasse platea dictumst. Suspendisse eu lectus. Ut
-mi mi, lacinia sit amet, placerat et, mollis vitae, dui. Sed ante tellus, tristique ut, iaculis eu, malesuada ac, dui.
-Mauris nibh leo, facilisis non, adipiscing quis, ultrices a, dui.
-
-\nocite{*}% Show all bib entries - both cited and uncited; comment this line to view only cited bib entries;
+%\nocite{*}% Show all bib entries - both cited and uncited; comment this line to view only cited bib entries;
 \bibliography{wileyNJD-AMA}%
 
 \clearpage
