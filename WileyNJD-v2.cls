@@ -1781,15 +1781,15 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 \def\presentaddress#1{\gdef\@presentaddress{\hsize=\textwidth\corresfont\baselineskip11pt\textbf{Present Address}\par #1}}%
 
 %
-\def\received#1{\gdef\@received{Received #1;}}\gdef\@received{Added at production}%
-\def\revised#1{\gdef\@revised{Revised #1;}}\gdef\@revised{Added at production}%
-\def\accepted#1{\gdef\@accepted{Accepted #1}}\gdef\@accepted{Added at production}%
-\def\published#1{\gdef\@published{Published #1}}\gdef\@published{Added at production}%
-   \def\xmlreceived{\gdef\@received{\ifnum\artActypcnt=1\relax Received:\ref{MSSreceiveddate}\ReceivedMONTH\nobreakspace{}\kern.5pt\ReceivedYEAR,\else Received:\ref{MSSreceiveddate}\nobreakspace{}\kern.5pt\ReceivedDATE\nobreakspace{}\kern.5pt\ReceivedMONTH\nobreakspace{}\kern.5pt\ReceivedYEAR\fi}}\gdef\@received{}%
-   \def\xmlrevised{\gdef\@revised{Revised:\ref{MSSrevised}\nobreakspace{}\kern.5pt\RevisedDATE\nobreakspace{}\kern.5pt\RevisedMONTH\nobreakspace{}\kern.5pt\RevisedYEAR}}\gdef\@revised{}%
-   \def\xmlaccepted{\gdef\@accepted{\ifnum\artActypcnt=1\relax in final form\ref{ACCdate}\AccMONTH\nobreakspace{}\kern.5pt\AccYEAR\else Accepted:\ref{ACCdate}\nobreakspace{}\kern.5pt\AccDATE\nobreakspace{}\kern.5pt\AccMONTH\nobreakspace{}\kern.5pt\AccYEAR\fi}}\gdef\@accepted{}%
-   \def\xmlacceptedonline{\gdef\@acceptedonline{Accepted article online\ref{PUBaccptdate}\nobreakspace{}\kern.5pt\AccDATEi\nobreakspace{}\kern.5pt\AccMONTHi\nobreakspace{}\kern.5pt\AccYEARi}}\gdef\@acceptedonline{}%
-   \def\xmlpubdate{\gdef\@pubdate{Published on:\ref{PUBEVdate}\nobreakspace{}\kern.5pt\PubDATE\nobreakspace{}\kern.5pt\PubMONTH\nobreakspace{}\kern.5pt\PubYEAR}}\gdef\@pubdate{}%
+% \def\received#1{\gdef\@received{Received #1;}}\gdef\@received{Added at production}%
+% \def\revised#1{\gdef\@revised{Revised #1;}}\gdef\@revised{Added at production}%
+% \def\accepted#1{\gdef\@accepted{Accepted #1}}\gdef\@accepted{Added at production}%
+% \def\published#1{\gdef\@published{Published #1}}\gdef\@published{Added at production}%
+%   \def\xmlreceived{\gdef\@received{\ifnum\artActypcnt=1\relax Received:\ref{MSSreceiveddate}\ReceivedMONTH\nobreakspace{}\kern.5pt\ReceivedYEAR,\else Received:\ref{MSSreceiveddate}\nobreakspace{}\kern.5pt\ReceivedDATE\nobreakspace{}\kern.5pt\ReceivedMONTH\nobreakspace{}\kern.5pt\ReceivedYEAR\fi}}\gdef\@received{}%
+%   \def\xmlrevised{\gdef\@revised{Revised:\ref{MSSrevised}\nobreakspace{}\kern.5pt\RevisedDATE\nobreakspace{}\kern.5pt\RevisedMONTH\nobreakspace{}\kern.5pt\RevisedYEAR}}\gdef\@revised{}%
+%   \def\xmlaccepted{\gdef\@accepted{\ifnum\artActypcnt=1\relax in final form\ref{ACCdate}\AccMONTH\nobreakspace{}\kern.5pt\AccYEAR\else Accepted:\ref{ACCdate}\nobreakspace{}\kern.5pt\AccDATE\nobreakspace{}\kern.5pt\AccMONTH\nobreakspace{}\kern.5pt\AccYEAR\fi}}\gdef\@accepted{}%
+%   \def\xmlacceptedonline{\gdef\@acceptedonline{Accepted article online\ref{PUBaccptdate}\nobreakspace{}\kern.5pt\AccDATEi\nobreakspace{}\kern.5pt\AccMONTHi\nobreakspace{}\kern.5pt\AccYEARi}}\gdef\@acceptedonline{}%
+%   \def\xmlpubdate{\gdef\@pubdate{Published on:\ref{PUBEVdate}\nobreakspace{}\kern.5pt\PubDATE\nobreakspace{}\kern.5pt\PubMONTH\nobreakspace{}\kern.5pt\PubYEAR}}\gdef\@pubdate{}%
 
 \newif\ifarticletype\global\articletypefalse
 
