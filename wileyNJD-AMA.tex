@@ -1,5 +1,8 @@
 \documentclass[AMA,STIX1COL]{WileyNJD-v2}
 
+\usepackage{lineno}
+\linenumbers
+
 \articletype{Research Article}%
 
 % \received{26 April 2016}
@@ -105,7 +108,7 @@ Details on model formulation of the one- and two-stage pseudo IPD ANCOVA approac
 \vspace{0.2cm}
 
 We use an example data set of a meta-analysis investigating the effect of calcium supplementation on reducing body weight \citep
-{trowman2006systematic}, which also serves as the default data set in the app. The data set is comprised of reported AD of nine randomised controlled trials comparing calcium supplements to placebo/no treatment and body weight measurements were taken at baseline and follow-up. In addition, baseline imbalance in the favor of treatment is present in these data.
+{trowman2006systematic}, which also serves as the default data set in the app. The data set is comprised of reported AD of nine randomised controlled trials comparing calcium supplements to placebo/no treatment and body weight measurements were taken at baseline and follow-up time points. In addition, baseline imbalance in the favor of treatment is present in these data.
 
 As discussed earlier, the appropriate approach to synthesise such data is the ANCOVA, and thus per trial and per group, the means and standard deviations of baseline and follow-up measurements, and the within-group correlation should be ideally reported and/or obtained by other summary statistics \citep{higgins2011chapter}.
 \vspace{0.1cm}
@@ -132,7 +135,7 @@ b) a descriptive summary output, outlining missingness rate and key descriptives
 \textbf{Step 2: Fill-in any missing summary data}
 \vspace{0.1cm}
 
-Often in the meta-analysis of pre/post design trials, missing summary data exist, most commonly missing standard deviations and/or the within-group correlations. The tool offers a sequence of steps involving calculations and sensible imputations to fill-in any missing data by clicking in the respective \textit{action buttons} (Figure \ref{fig:shiny_missing}). For example, the \textit{action button} \textquotesingle Fill-in SD from SE\textquotesingle\, calculates any missing standard deviations at baseline, follow-up, of change scores as the product of the respective known standard errors and the square root of the sample sizes.
+Often in the meta-analysis of pre/post design trials, missing summary data exist, most commonly missing standard deviations and/or within-group correlations. The tool offers a sequence of steps involving calculations and sensible imputations to fill-in any missing data by clicking in the respective \textit{action buttons} (Figure \ref{fig:shiny_missing}). For example, the \textit{action button} \textquotesingle Fill-in SD from SE\textquotesingle\, calculates any missing standard deviations at baseline, follow-up, of change scores as the product of the respective known standard errors and the square root of the sample sizes.
 Similarly, by clicking on the rest of \textit{action buttons} (in the order they are presented), a full data set is constructed by first assuming any missing standard deviations at follow-up equal to baseline standard deviations and thus the calculation of the within-group correlation is possible by the following formula: \citep{higgins2011chapter}:
 
 \begin{equation*}
@@ -166,7 +169,7 @@ The sequence of filling-in steps is shown in Figure \ref{fig: shiny-fillin_outpu
 Once a complete data set is created, the next step is to navigate to the \textquotesingle Meta-Analysis\textquotesingle\ tab under which a plethora of modelling approaches are offered to the user. This page is structured as such to provide options to select the type of meta-analysis model and additional functionalities, as shown in Figure \ref{fig:shiny-choose_analysis}.
 The default choice of effect size is set to \textquotesingle Mean difference\textquotesingle\, since the most appropriate methods for meta-analysis of pre/post measurements have been, thus far, proposed only for the mean difference. Additional efforts may be put in the future by the developer and contributors of this tool to incorporate other effect size measures, for example standardised mean differences.
 
-The tool is organised as such to offer three key analytic approaches under the respective tabs: \textquotesingle Standard AD\textquotesingle\ ,  \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ . The first tab of standard AD approaches is split to 3 sub-tabs, which perform the routinely used final (follow-up) scores and change scores methods and the reconstructed ANCOVA estimates method. The first interaction step of the user with the app is to choose between a RE or a CE meta-analysis model (default option is the RE). It is also possible to implement the recommended HK \citep{HartungJ.Knapp2001, sidik2002simple} adjustment method by ticking the box. The same selection options apply also to the \textquotesingle Two-stage pseudo IPD\textquotesingle\ approach tab.
+The tool is organised as such to offer three key analytic approaches under the respective tabs: \textquotesingle Standard AD\textquotesingle\ ,  \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ . The first tab of standard AD approaches is split to 3 sub-tabs, which perform the routinely used final (follow-up) scores and change scores methods and the reconstructed ANCOVA estimates method. The first interaction step of the user with the app is to choose between a RE or a CE meta-analysis model (default option is the RE). It is also possible to implement the recommended HK \citep{HartungJ.Knapp2001, sidik2002simple} adjustment method by ticking the respective box. The same selection options apply also to the \textquotesingle Two-stage pseudo IPD\textquotesingle\ approach tab.
 
 \begin{figure}[ht]
   \centering \includegraphics[width=0.9\textwidth]{analysis_options.JPG}
