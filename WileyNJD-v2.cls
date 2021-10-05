@@ -1804,16 +1804,16 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 
 \def\headfootrule#1{\gdef\@headfootrule{#1}}\headfootrule{{\rule{\textwidth}{.5\p@}}}%
 
-\def\historykern#1{\gdef\history@kern{#1}}\historykern{\nobreakspace{}\kern.5pt}
-\def\@dummy@received{\textcolor{red}{Received:\history@kern{}\history@kern{}Added at production}}%
-\def\@dummy@revised{\textcolor{red}{Revised:\history@kern{}\history@kern{}Added at production}}%
-\def\@dummy@accepted{\textcolor{red}{Accepted:\history@kern{}\history@kern{}Added at production}}%
-\def\@dummy@pubdate{\textcolor{red}{Published\history@kern{}on:\history@kern{}\history@kern{}Added at production}}%
-\def\historydates#1{\gdef\@history@dates{#1}}%
-\historydates{{\titlepageheadfont%
-  \ifx\@received\@empty\@dummy@received\else\@dummy@received\fi\historydatesvertbar%
-  \ifx\@revised\@empty\@dummy@revised\else\@dummy@revised\fi\historydatesvertbar%
-  \ifx\@accepted\@empty\@dummy@accepted\else\@dummy@accepted\fi%\historydatesvertbar%
+% \def\historykern#1{\gdef\history@kern{#1}}\historykern{\nobreakspace{}\kern.5pt}
+% \def\@dummy@received{\textcolor{red}{Received:\history@kern{}\history@kern{}Added at production}}%
+% \def\@dummy@revised{\textcolor{red}{Revised:\history@kern{}\history@kern{}Added at production}}%
+% \def\@dummy@accepted{\textcolor{red}{Accepted:\history@kern{}\history@kern{}Added at production}}%
+% \def\@dummy@pubdate{\textcolor{red}{Published\history@kern{}on:\history@kern{}\history@kern{}Added at production}}%
+% \def\historydates#1{\gdef\@history@dates{#1}}%
+% \historydates{{\titlepageheadfont%
+%   \ifx\@received\@empty\@dummy@received\else\@dummy@received\fi\historydatesvertbar%
+%   \ifx\@revised\@empty\@dummy@revised\else\@dummy@revised\fi\historydatesvertbar%
+%   \ifx\@accepted\@empty\@dummy@accepted\else\@dummy@accepted\fi%\historydatesvertbar%
 %  \ifx\@pubdate\@empty\@dummy@pubdate\else\@pubdate\fi%
 }}%
 %
