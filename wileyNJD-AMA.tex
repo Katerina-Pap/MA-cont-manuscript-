@@ -3,6 +3,7 @@
 \usepackage{lineno}
 \linenumbers
 
+
 \articletype{Research Article}%
 
 % \received{26 April 2016}
@@ -35,7 +36,7 @@
 
 % \presentaddress{This is sample for present address text this is sample for present address text}
 
-\abstract[Abstract]{Meta-analysis is a widely used methodology to combine evidence from different sources examining a common research phenomenon, to obtain a quantitative summary of the studied phenomenon. In the medical field, multiple studies investigate the effectiveness of new treatments and meta-analysis is largely performed to generate the summary (average) treatment effect. In the meta-analysis of aggregate continuous outcomes measured in a pre/post design, a plethora of methods exist: analysis of final (follow-up) scores, analysis of change scores and analysis of covariance (ANCOVA). Specialised and general purpose statistical software is used to apply the various methods, yet, often the choice among them depends on data availability and statistical affinity. We present a new web-based tool, 
+\abstract[Abstract]{Meta-analysis is a widely used methodology to combine evidence from different sources examining a common research phenomenon, to obtain a quantitative summary of the studied phenomenon. In the medical field, multiple studies investigate the effectiveness of new treatments and meta-analysis is largely performed to generate the summary (average) treatment effect. In the meta-analysis of aggregate continuous outcomes measured in a pretest-posttest design, a plethora of methods exist: analysis of final (follow-up) scores, analysis of change scores and analysis of covariance (ANCOVA). Specialised and general purpose statistical software is used to apply the various methods, yet, often the choice among them depends on data availability and statistical affinity. We present a new web-based tool, 
 \href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}, to conduct meta-analysis of continuous data assessed pre- and post-treatment using the aforementioned approaches on aggregate data and a more flexible approach of generating and analysing pseudo individual participant data (IPD). The interactive web environment, available by R \texttt{Shiny}, is used to create this freely available statistical tool, requiring no programming skills by the users.}
 
 \keywords{ ANCOVA, baseline imbalance, pseudo individual participant data, shiny}
@@ -43,7 +44,7 @@
 \jnlcitation{\cname{%
 \author{Papadimitropoulou K.}, 
 \author{R.D. Riley}, 
-\author{o.M. Dekkers}, 
+\author{O.M. Dekkers}, 
 \author{T. Stijnen}, and 
 \author{S. le Cessie}} (\cyear{2021}), 
 \ctitle{\href{https://katerina-pap.shinyapps.io/MA-cont-prepostES/}{\textbf{\texttt{MA-cont:pre/post effect size}}}: An interactive tool for the meta-analysis of continuous outcomes using R \texttt{Shiny}}, \cjournal{Research Synthesis Methods}.}
@@ -51,6 +52,8 @@
 \maketitle
 
 \footnotetext{\textbf{Abbreviations:} AD, aggregate data; ANCOVA, analysis of covariance; CE, common-effect; HK, Hartung-Knapp, IPD, individual participant data; RE, random-effects }
+
+
 
 \section{Introduction}\label{sec1}
 
@@ -135,7 +138,7 @@ b) a descriptive summary output, outlining missingness rate and key descriptives
 \textbf{Step 2: Fill-in any missing summary data}
 \vspace{0.1cm}
 
-Often in the meta-analysis of pre/post design trials, missing summary data exist, most commonly missing standard deviations and/or within-group correlations. The tool offers a sequence of steps involving calculations and sensible imputations to fill-in any missing data by clicking in the respective \textit{action buttons} (Figure \ref{fig:shiny_missing}). For example, the \textit{action button} \textquotesingle Fill-in SD from SE\textquotesingle\, calculates any missing standard deviations at baseline, follow-up, of change scores as the product of the respective known standard errors and the square root of the sample sizes.
+Often in the meta-analysis of pretest-posttest design trials, missing summary data exist, most commonly missing standard deviations and/or within-group correlations. The tool offers a sequence of steps involving calculations and sensible imputations to fill-in any missing data by clicking in the respective \textit{action buttons} (Figure \ref{fig:shiny_missing}). For example, the \textit{action button} \textquotesingle Fill-in SD from SE\textquotesingle\, calculates any missing standard deviations at baseline, follow-up, of change scores as the product of the respective known standard errors and the square root of the sample sizes.
 Similarly, by clicking on the rest of \textit{action buttons} (in the order they are presented), a full data set is constructed by first assuming any missing standard deviations at follow-up equal to baseline standard deviations and thus the calculation of the within-group correlation is possible by the following formula: \citep{higgins2011chapter}:
 
 \begin{equation*}
@@ -247,14 +250,40 @@ Building \texttt{shiny} apps has grown in popularity and its community of develo
 
 Our tool may also be improved and extended and we welcome any suggestions by the readers/users. A natural extension would accommodate additional effect sizes, for example, standardised mean difference or ratio of means. However, this extension requires methodological work prior to software implementation. In addition, the potential of sensitivity analysis by varying the values of the imputed missing statistics, e.g., within-group correlations can be explored in the future.
 
+
+\section*{Highlights}
+\subsection*{What is already known?}
+Traditional meta-analytic approaches of continuous outcomes measured in a pretest-posttest design, e.g., analysis of final scores and change scores provide in general less precise estimates of the treatment effect (and often contradictory results) and that ANCOVA approaches are preferred with or without baseline imbalance.
+
+\subsection*{What is new?}
+A freely available tool to perform meta-analysis of continuous outcomes measured in a pretest-posttest design while tackling baseline imbalance issues and treatment-by-baseline interaction effects is provided. The tool is interactive and aims to enable both technical and non-technical researchers to apply the most appropriate method for meta-analysis of such data, i.e., the linear mixed effects ANCOVA.
+
+\subsection*{Potential impact for RSM readers outside the authors’ field}
+We aspire this software to additionally serve as an educational tool for the user to navigate through various analyses and educate oneself on the appropriate method, i.e., ANCOVA. This applications extends further than the medical field to any technical field where continuous measurements are recorded before and after an intervention.
+
+
+
 %\nocite{*}% Show all bib entries - both cited and uncited; comment this line to view only cited bib entries;
 \bibliography{wileyNJD-AMA}%
 
 \clearpage
 
+\subsection*{Financial disclosure}
+
+None reported.
+
+\subsection*{Conflict of interest}
+
+The authors declare no potential conflict of interest.
+
+\subsection*{Data availability statement}
+The software and data presented in this paper are freely available on Github: \url{https://github.com/Katerina-Pap/MA-cont-shiny-app}.
+
 % \section*{Author Biography}
 
 % \begin{biography}{\includegraphics[width=66pt,height=86pt,draft]{empty}}{\textbf{Author Name.} This is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text this is sample author biography text.}
 % \end{biography}
+
+
 
 \end{document}
