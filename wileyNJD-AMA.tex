@@ -73,7 +73,7 @@ The app can be accessed via the following url: \url{https://katerina-pap.shinyap
 The tool is designed to make routinely used and more sophisticated meta-analytic approaches available to the user, requiring no programming skills, yet a good understanding of meta-analytic concepts. The app offers a worked-out example, where a default data set is used to showcase the various functionalities. The users can upload their own data sets into the webpage and proceed with data manipulation and analysis steps. All generated tabular and graphical output may be downloaded and accessed at a later time by the user.  A step-by-step demonstration of \textbf{\texttt{MA-cont:pre/post effect size}} is provided in a video of instructions found in the homepage of the tool (Figure \ref{shiny-homepage}).
 
 \begin{figure}[t]
-   \centering \includegraphics[width=0.9\textwidth]{homepage.JPG}
+   \centering \includegraphics[width=0.9\textwidth]{Home page_shiny.jpeg}
     \caption{\small {Homepage.}}\label{shiny-homepage}
 \end{figure}
 
@@ -87,7 +87,7 @@ We used computing technologies and R packages, i.e., RStudio \citep{Rstudiocite}
 \end{enumerate}
 A \texttt{Shiny} app executes R code on the backend; in this app most analyses are powered by \texttt{metafor} and \texttt{nlme}, without any requirements of local installation of R/RStudio. What the user sees in the browser is the frontend, the interface for the user to interact with the app via a personal computer, tablet or phone.
 
-We encourage the reader/user to submit feedback on the existing functionalities and to provide suggestions for further improvement at \url{https://github.com/Katerina-Pap/MA-cont-shiny-app/issues}.
+We encourage the reader/user to submit feedback on the existing functionalities and to provide suggestions for further improvement at \url{https://github.com/Katerina-Pap/MA-cont-shiny-app/issues}. We also welcome incremental updates by interested users and developers.
 
 \subsection{Statistical analysis}
 
@@ -191,25 +191,27 @@ The generated output under the \textquotesingle Standard AD\textquotesingle\ tab
 
 Under the \textquotesingle One-stage pseudo IPD\textquotesingle\ tab, we initially provide a data table of the generated pseudo IPD baselines and outcomes of each pseudo participant to enable the users to familiarise themselves with the pseudo IPD approach. Each line is a pseudo IPD observation similar to a true IPD one, and the user can navigate along the various rows of the dataframe. This pseudo IPD set is subsequently used to fit the one- and two-stage ANCOVA methods. 
 
-The results of the summary treatment effect under this approach are given in the second table (in grey) of this tab (Figure \ref{fig:shiny-one-stage}). We provide four possible options to model the within-trial residual variances to allow the user to assume more realistic scenarios depending on the data specificities; more details can be found in Table \ref{tab:}. We encourage the user to think which assumption suits his/her data best or present all four, if possible. When interested in a summary estimate that naturally compares with the two-stage approach or the AD ANCOVA recovered estimates, one should opt for presenting the results from the study-specific within-trial residual variance model. In this example, the summary treatment effect was estimated equal to -0.43 kg [95\% CI: -1.16, -0.3].
+The results of the summary treatment effect under this approach are given in the second table (in grey) of this tab (Figure \ref{fig:shiny-one-stage}). We provide four possible options to model the within-trial residual variances to allow the user to assume more realistic scenarios depending on the data specificities; {\color{blue} more details can be found in Table \ref{tab:resvar}}. We encourage the user to think which assumption suits his/her data best or present all four, if possible. When interested in a summary estimate that naturally compares with the two-stage approach or the AD ANCOVA recovered estimates, one should opt for presenting the results from the study-specific within-trial residual variance model. In this example, the summary treatment effect was estimated equal to -0.43 kg [95\% CI: -1.16, -0.3].
 
 
 \begin{figure}[t]
-  \centering \includegraphics[width=0.9\textwidth]{one_stage.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{One stage_shiny.jpeg}
     \caption{\small {Screenshot of one-stage pseudo IPD approach, the pseudo IPD set and the results across the various options for the within-trial residual variances.}} \label{fig:shiny-one-stage}
 \end{figure}
 
 \begin{table}[t]
-\caption{Models for the within-trial residual variances}
+{\color{blue}
+\caption{Models for the within-trial residual variance}
 \label{tab:resvar}
-\begin{tabular}{cc}
+\begin{tabular}{cl}
 \toprule
-\begin{tabular}[c]{@{}c@{}}Arm- and study-specific \\ $\sigma^2_{ik}$:\end{tabular} & varies by arm and study; the most flexible approach                   \\
-\begin{tabular}[c]{@{}c@{}}Study-specific \\ $\sigma^2_{i}$:\end{tabular}           & varies by study but assumed equal between treatment and control arms; \\
-\begin{tabular}[c]{@{}c@{}}Arm-specific\\ $\sigma^{2}_{k}$:\end{tabular}            &                                                                       \\
-\begin{tabular}[c]{@{}c@{}}One variance\\ $\sigma^2$:\end{tabular}                  &                                                                       \\ \bottomrule
+\begin{tabular}[c]{@{}c@{}}Arm- and study-specific \\ $\sigma^2_{ik}$:\end{tabular} & varies by arm and study; the most flexible approach \\ \hline
+\begin{tabular}[c]{@{}c@{}}Study-specific \\ $\sigma^2_{i}$:\end{tabular} & \begin{tabular}[c]{@{}l@{}}varies by study but is assumed equal between treatment and control arms; \\ to be used when variation of outcomes is expected to be same between the two arms\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Arm-specific\\ $\sigma^{2}_{k}$:\end{tabular} & \begin{tabular}[c]{@{}l@{}}varies by arm but is assumed equal across all studies;\\ to be used when outcomes are expected to vary between treatment and control arms, particularly \\ when greater variability is expected in the active treatment group\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}One variance\\ $\sigma^2$:\end{tabular} & a single variance parameter as it does not vary across arms or studies \\ \bottomrule
 \end{tabular}
 \end{table}
+}
 
 \begin{itemize}
 \item Treatment-by-baseline interaction effect 
@@ -217,7 +219,7 @@ The results of the summary treatment effect under this approach are given in the
 The within-trial treatment-by-baseline interaction effect can be obtained under the homonym sub-tabs of the \textquotesingle One-stage pseudo IPD\textquotesingle\ and \textquotesingle Two-stage pseudo IPD\textquotesingle\ tabs. In the first approach, the results are presented in a table, with four distinct options of the within-trial residual variance (Figure \ref{fig:shiny-one-int} ). If we focus on the study-specific assumption for the residual variances, then the interaction effect is estimated equal to 0.006 [95\% CI: -0.033, 0.045], indicating a non-significant relationship at participant level between the baseline score and the treatment effect.
 
 \begin{figure} [t] 
-  \centering \includegraphics[width=0.9\textwidth]{onestage_int.JPG}
+  \centering \includegraphics[width=0.9\textwidth]{One_stage_int_effect_shiny.jpeg}
     \caption{\small {Screenshot of the results for the treatment-by-baseline interaction effect under the one-stage pseudo IPD approach.}} \label{fig:shiny-one-int}
 \end{figure}
 
